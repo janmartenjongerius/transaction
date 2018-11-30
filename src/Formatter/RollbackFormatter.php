@@ -6,8 +6,8 @@
 
 namespace Johmanx10\WarpPipe\Formatter;
 
+use Johmanx10\WarpPipe\Exception\OperationRolledBackExceptionInterface;
 use Johmanx10\WarpPipe\OperationFailureInterface;
-use Johmanx10\WarpPipe\OperationRolledBackException;
 
 class RollbackFormatter implements RollbackFormatterInterface
 {
@@ -30,11 +30,11 @@ class RollbackFormatter implements RollbackFormatterInterface
     /**
      * Format the given rollback exception into a readable string.
      *
-     * @param OperationRolledBackException $rollback
+     * @param OperationRolledBackExceptionInterface $rollback
      *
      * @return string
      */
-    public function format(OperationRolledBackException $rollback): string
+    public function format(OperationRolledBackExceptionInterface $rollback): string
     {
         return implode(
             PHP_EOL,

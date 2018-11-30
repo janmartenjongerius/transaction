@@ -1,7 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-use Johmanx10\WarpPipe\FailedRollbackException;
+use Johmanx10\WarpPipe\Exception\FailedRollbackException;
 use Johmanx10\WarpPipe\Formatter\FailedRollbackFormatter;
 use Johmanx10\WarpPipe\Operation;
 use Johmanx10\WarpPipe\Pipe;

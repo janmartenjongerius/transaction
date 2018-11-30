@@ -6,6 +6,8 @@
 
 namespace Johmanx10\WarpPipe;
 
+use Johmanx10\WarpPipe\Exception\FailedRollbackException;
+use Johmanx10\WarpPipe\Exception\OperationRolledBackException;
 use SplDoublyLinkedList;
 use Throwable;
 

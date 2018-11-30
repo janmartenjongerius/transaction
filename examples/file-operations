@@ -4,7 +4,7 @@ require_once __DIR__ . '/../vendor/autoload.php';
 
 use Johmanx10\WarpPipe\Formatter\RollbackFormatter;
 use Johmanx10\WarpPipe\OperationInterface;
-use Johmanx10\WarpPipe\OperationRolledBackException;
+use Johmanx10\WarpPipe\Exception\OperationRolledBackException;
 use Johmanx10\WarpPipe\Pipe;
 use Johmanx10\WarpPipe\Operation;
 

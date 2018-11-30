@@ -4,11 +4,12 @@
  * https://www.mediact.nl
  */
 
-namespace Johmanx10\WarpPipe;
+namespace Johmanx10\WarpPipe\Exception;
 
+use Johmanx10\WarpPipe\OperationFailureInterface;
 use RuntimeException;
 
-class OperationRolledBackException extends RuntimeException
+class OperationRolledBackException extends RuntimeException implements OperationRolledBackExceptionInterface
 {
     /** @var OperationFailureInterface[] */
     private $failures;

@@ -6,16 +6,16 @@
 
 namespace Johmanx10\WarpPipe\Formatter;
 
-use Johmanx10\WarpPipe\OperationRolledBackException;
+use Johmanx10\WarpPipe\Exception\OperationRolledBackExceptionInterface;
 
 interface RollbackFormatterInterface
 {
     /**
      * Format the given rollback exception into a readable string.
      *
-     * @param OperationRolledBackException $rollback
+     * @param OperationRolledBackExceptionInterface $rollback
      *
      * @return string
      */
-    public function format(OperationRolledBackException $rollback): string;
+    public function format(OperationRolledBackExceptionInterface $rollback): string;
 }
