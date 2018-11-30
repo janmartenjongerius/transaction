@@ -1,0 +1,138 @@
+#!/usr/bin/env php
+<?php
+require_once __DIR__ . '/../vendor/autoload.php';
+
+use Johmanx10\WarpPipe\Formatter\RollbackFormatter;
+use Johmanx10\WarpPipe\OperationInterface;
+use Johmanx10\WarpPipe\OperationRolledBackException;
+use Johmanx10\WarpPipe\Pipe;
+use Johmanx10\WarpPipe\Operation;
+
+$appDir             = __DIR__ . '/my-app';
+$consoleSource      = realpath(__DIR__ . '/../vendor/bin/composer');
+$consoleDestination = $appDir . '/bin/console';
+
+$operations = [
+    // Create the app directory.
+    new Operation(
+        // Create the new directory.
+        function () use ($appDir) {
+            if (!file_exists($appDir) && !@mkdir($appDir)) {
+                throw new RuntimeException(
+                    sprintf('Could not create directory: "%s"', $appDir)
+                );
+            }
+        },
+        // Roll back the operation.
+        function () use ($appDir) {
+            if (file_exists($appDir) && !@rmdir($appDir)) {
+                throw new RuntimeException(
+                    sprintf('Could not remove directory: "%s"', $appDir)
+                );
+            }
+        },
+        sprintf('Create directory: "%s"', $appDir)
+    ),
+    // Copy the application console.
+    // This operation should fail, because the destination directory does not
+    // exist.
+    new Operation(
+        // Copy the application console.
+        function () use ($consoleSource, $consoleDestination) {
+            if (!file_exists($consoleDestination)
+                && !@copy($consoleSource, $consoleDestination)
+            ) {
+                throw new RuntimeException(
+                    sprintf(
+                        'Could not copy "%s" -> "%s".',
+                        $consoleSource,
+                        $consoleDestination
+                    )
+                );
+            }
+        },
+        // Remove the application console.
+        function () use ($consoleDestination) {
+            if (file_exists($consoleDestination)
+                && !@unlink($consoleDestination)
+            ) {
+                throw new RuntimeException(
+                    sprintf('Could not remove "%s".', $consoleDestination)
+                );
+            }
+        },
+        sprintf('Copy "%s" -> "%s"', $consoleSource, $consoleDestination)
+    ),
+    // Apply executable rights.
+    new class ($consoleDestination) implements OperationInterface
+    {
+        /** @var string */
+        private $file;
+
+        /** @var int */
+        private $mode;
+
+        /**
+         * Constructor.
+         *
+         * @param string $file
+         */
+        public function __construct(string $file)
+        {
+            $this->file = $file;
+        }
+
+
+        /**
+         * Execute the operation.
+         *
+         * @return void
+         */
+        public function __invoke(): void
+        {
+            $this->mode = fileperms($this->file);
+
+            if (!@chmod($this->file, 0755)) {
+                throw new RuntimeException(
+                    sprintf('Failed making "%s" executable.', $this->file)
+                );
+            }
+        }
+
+        /**
+         * Apply the rollback mechanism.
+         *
+         * @return void
+         */
+        public function rollback(): void
+        {
+            if (is_int($this->mode)
+                && file_exists($this->file)
+                && !@chmod($this->file, $this->mode)
+            ) {
+                throw new RuntimeException(
+                    sprintf(
+                        'Failed restoring rights of "%s" to %o',
+                        $this->file,
+                        $this->mode
+                    )
+                );
+            }
+        }
+    }
+];
+
+$pipe = new Pipe();
+
+try {
+    $pipe(...$operations);
+} catch (OperationRolledBackException $rollback) {
+    $rollbackFormatter = new RollbackFormatter();
+    echo $rollbackFormatter->format($rollback) . PHP_EOL;
+}
+
+echo PHP_EOL . sprintf(
+    'Does app directory ("%s") exist, currently? %s',
+    $appDir,
+    file_exists($appDir) ? 'Yes' : 'No'
+) . PHP_EOL;
