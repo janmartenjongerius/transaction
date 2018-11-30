@@ -11,10 +11,6 @@ use Johmanx10\WarpPipe\OperationRolledBackException;
 
 class RollbackFormatter implements RollbackFormatterInterface
 {
-    private const OPERATION_PADDING_LENGTH    = 8;
-    private const OPERATION_PADDING_STRING    = ' ';
-    private const OPERATION_PADDING_DIRECTION = STR_PAD_LEFT;
-
     /** @var OperationFailureFormatterInterface */
     private $failureFormatter;
 
@@ -48,16 +44,7 @@ class RollbackFormatter implements RollbackFormatterInterface
                     array $carry,
                     OperationFailureInterface $failure
                 ): array {
-                    $carry[] = str_pad(
-                        (string)spl_object_id($failure->getOperation()),
-                        static::OPERATION_PADDING_LENGTH,
-                        static::OPERATION_PADDING_STRING,
-                        static::OPERATION_PADDING_DIRECTION
-                    )
-                        . sprintf(
-                            ': %s',
-                            $this->failureFormatter->format($failure)
-                        );
+                    $carry[] = $this->failureFormatter->format($failure);
 
                     return $carry;
                 },

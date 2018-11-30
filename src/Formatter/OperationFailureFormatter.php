@@ -43,15 +43,24 @@ class OperationFailureFormatter implements OperationFailureFormatterInterface
      */
     public function format(OperationFailureInterface $failure): string
     {
-        $exception = $failure->getException();
+        $exception  = $failure->getException();
+        $operation  = $failure->getOperation();
+        $identifier = str_pad(
+            sprintf('(%d)', spl_object_id($operation)),
+            8,
+            ' ',
+            STR_PAD_RIGHT
+        );
 
         return $exception !== null
             ? sprintf(
-                '❌ %s',
+                '%s ❌ %s',
+                $identifier,
                 $this->exceptionFormatter->format($exception)
             )
             : sprintf(
-                '✔ %s',
+                '%s ✔ %s',
+                $identifier,
                 $this->operationFormatter->format($failure->getOperation())
             );
     }

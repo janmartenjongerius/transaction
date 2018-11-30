@@ -1,0 +1,51 @@
+#!/usr/bin/env php
+<?php
+
+use Johmanx10\WarpPipe\FailedRollbackException;
+use Johmanx10\WarpPipe\Formatter\FailedRollbackFormatter;
+use Johmanx10\WarpPipe\Operation;
+use Johmanx10\WarpPipe\Pipe;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$operations = [
+    new Operation(
+        function () {
+            // Nothing to do.
+        },
+        null,
+        'Operation Foo'
+    ),
+    new Operation(
+        function () {
+            // Nothing to do.
+        },
+        function () {
+            throw new RuntimeException('Could not rollback Bar.');
+        },
+        'Operation Bar'
+    ),
+    new Operation(
+        function () {
+            // Nothing to do.
+        },
+        null,
+        'Operation Baz'
+    ),
+    new Operation(
+        function () {
+            throw new RuntimeException('Failed operation Qux');
+        },
+        null,
+        'Operation Qux'
+    )
+];
+
+$pipe = new Pipe();
+
+try {
+    $pipe(...$operations);
+} catch (FailedRollbackException $exception) {
+    $formatter = new FailedRollbackFormatter();
+    echo $formatter->format($exception) . PHP_EOL;
+}
