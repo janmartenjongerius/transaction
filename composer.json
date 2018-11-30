@@ -1,0 +1,44 @@
+{
+    "name": "johmanx10/warp-pipe",
+    "description": "Handles operations with automatic rollback mechanisms.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Jan-Marten de Boer",
+            "email": "github@johmanx.com"
+        }
+    ],
+    "minimum-stability": "stable",
+    "prefer-stable": true,
+    "require": {
+        "php": "^7.1",
+        "ext-SPL": "^7.1"
+    },
+    "require-dev": {
+        "mediact/testing-suite": "@stable"
+    },
+    "autoload": {
+        "psr-4": {
+            "Johmanx10\\WarpPipe\\": "src"
+        }
+    },
+    "extra": {
+        "grumphp": {
+            "config-default-path": "vendor/mediact/testing-suite/config/default/grumphp.yml"
+        }
+    },
+    "archive": {
+        "exclude": [
+            "/.gitignore",
+            "/phpunit.xml",
+            "/phpmd.xml",
+            "/phpstan.neon",
+            "/phpcs.xml",
+            "/examples"
+        ]
+    },
+    "config": {
+        "sort-packages": true
+    }
+}
