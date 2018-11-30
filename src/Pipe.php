@@ -56,9 +56,8 @@ class Pipe implements PipeInterface
         // @codingStandardsIgnoreLine
         for ($failures = []; $queue->valid(); $queue->next()) {
             /** @var OperationInterface $operation */
-            $operation  = $queue->current();
-            $failures[] = new OperationFailure($operation, $exception);
-            $exception  = null;
+            $operation = $queue->current();
+            $exception = null;
 
             try {
                 $operation->rollback();
@@ -66,9 +65,12 @@ class Pipe implements PipeInterface
                 throw new FailedRollbackException(
                     $operation,
                     0,
-                    $rollbackException
+                    $rollbackException,
+                    ...$failures
                 );
             }
+
+            $failures[] = new OperationFailure($operation, $exception);
         }
 
         return $failures;

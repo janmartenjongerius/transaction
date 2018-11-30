@@ -14,19 +14,25 @@ class FailedRollbackException extends RuntimeException
     /** @var OperationInterface */
     private $operation;
 
+    /** @var OperationFailureInterface[] */
+    private $previousRollbacks;
+
     /**
      * Constructor.
      *
-     * @param OperationInterface $operation
-     * @param int                $code
-     * @param Throwable|null     $previous
+     * @param OperationInterface        $operation
+     * @param int                       $code
+     * @param Throwable|null            $previous
+     * @param OperationFailureInterface ...$previousRollbacks
      */
     public function __construct(
         OperationInterface $operation,
         int $code = 0,
-        Throwable $previous = null
+        Throwable $previous = null,
+        OperationFailureInterface ...$previousRollbacks
     ) {
-        $this->operation = $operation;
+        $this->operation         = $operation;
+        $this->previousRollbacks = $previousRollbacks;
 
         parent::__construct(
             sprintf(
@@ -46,5 +52,15 @@ class FailedRollbackException extends RuntimeException
     public function getOperation(): OperationInterface
     {
         return $this->operation;
+    }
+
+    /**
+     * Get the rollbacks that succeeded before the current failure.
+     *
+     * @return OperationFailureInterface[]
+     */
+    public function getPreviousRollbacks(): array
+    {
+        return $this->previousRollbacks;
     }
 }
