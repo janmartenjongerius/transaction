@@ -21,7 +21,7 @@ all operations were applied. Given the following operations:
 This will be handled as follows:
 
 1. ✔ Create directory `my-app`.
-2. ❌ Copy file `dist/console` to `my-app/bin/console` - Directory `my-app/bin`
+2. ∴ Copy file `dist/console` to `my-app/bin/console` - Directory `my-app/bin`
    does not exist.
 3. ✔ Rollback: if `my-app/bin/console` exists, remove it.
 4. ✔ Rollback: if `my-app` exists, remove it.
@@ -136,7 +136,7 @@ An operation failure consists of an operation and optionally an exception.
 When an operation failure is formatted, it determines a strategy based on whether
 an exception is set.
 
-If an exception is set, the result will be marked with `❌` and uses the exception
+If an exception is set, the result will be marked with `∴` and uses the exception
 message as description. When no exception is present, the result will be marked
 with `✔` and uses the formatted operation as description.
 
@@ -149,7 +149,7 @@ An operation failure is formatted using the following pattern:
 In order, these show an operation failure with and without exception:
 
 ```
-(2)      ❌ Could not copy "dist/console" -> "my-app/bin/console".
+(2)      ∴ Could not copy "dist/console" -> "my-app/bin/console".
 (1)      ✔ Create directory: "my-app"
 ```
 
@@ -183,7 +183,7 @@ second operation, the formatted output may look something like:
 2 operations were rolled back: 6, 2
 
 Stacktrace:
-(6)      ❌ Could not copy "dist/console" -> "my-app/bin/console".
+(6)      ∴ Could not copy "dist/console" -> "my-app/bin/console".
 (2)      ✔ Create directory: "my-app"
 ```
 
@@ -231,7 +231,7 @@ Operation Bar
 Could not rollback Bar.
 
 Previous rollbacks:
-(10)     ❌ Failed operation Qux
+(10)     ∴ Failed operation Qux
 (8)      ✔ Operation Baz
 ```
 

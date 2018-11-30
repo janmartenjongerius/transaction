@@ -54,7 +54,7 @@ class OperationFailureFormatter implements OperationFailureFormatterInterface
 
         return $exception !== null
             ? sprintf(
-                '%s ❌ %s',
+                '%s ∴ %s',
                 $identifier,
                 $this->exceptionFormatter->format($exception)
             )
