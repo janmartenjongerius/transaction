@@ -17,16 +17,13 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": "^7.1",
-        "ext-SPL": "^7.1"
+        "php": "^7.2",
+        "ext-SPL": "^7.2"
     },
     "require-dev": {
         "mediact/testing-suite": "@stable"
     },
     "autoload": {
-        "files": [
-            "src/polyfill-spl.php"
-        ],
         "psr-4": {
             "Johmanx10\\Transaction\\": "src"
         }
