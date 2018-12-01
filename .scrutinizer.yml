@@ -17,7 +17,6 @@ build:
               file: 'coverage.xml'
               format: 'clover'
           - 'vendor/bin/grumphp run --no-interaction'
-          - 'bin/dependency-guard'
 
     tests: true
 
