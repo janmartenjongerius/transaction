@@ -1,3 +1,10 @@
+[![Build Status](https://scrutinizer-ci.com/g/johmanx10/transaction/badges/build.png?b=master)](https://scrutinizer-ci.com/g/johmanx10/transaction/build-status/master)
+![PHP from Packagist](https://img.shields.io/packagist/php-v/johmanx10/transaction.svg)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/johmanx10/transaction/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/johmanx10/transaction/?branch=master)
+[![Code Coverage](https://scrutinizer-ci.com/g/johmanx10/transaction/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/johmanx10/transaction/?branch=master)
+![Packagist](https://img.shields.io/packagist/l/johmanx10/transaction.svg)
+
+
 # Introduction
 
 Transaction handles operations with automatic rollback mechanisms.
