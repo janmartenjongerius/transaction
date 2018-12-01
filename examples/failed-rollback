@@ -1,14 +1,14 @@
 #!/usr/bin/env php
 <?php
 
-use Johmanx10\WarpPipe\Exception\FailedRollbackException;
-use Johmanx10\WarpPipe\Formatter\FailedRollbackFormatter;
-use Johmanx10\WarpPipe\Operation;
-use Johmanx10\WarpPipe\Pipe;
+use Johmanx10\Transaction\Exception\FailedRollbackException;
+use Johmanx10\Transaction\Formatter\FailedRollbackFormatter;
+use Johmanx10\Transaction\Operation;
+use Johmanx10\Transaction\Transaction;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$operations = [
+$transaction = new Transaction(
     new Operation(
         function () {
             // Nothing to do.
@@ -39,12 +39,10 @@ $operations = [
         null,
         'Operation Qux'
     )
-];
-
-$pipe = new Pipe();
+);
 
 try {
-    $pipe(...$operations);
+    $transaction->commit();
 } catch (FailedRollbackException $exception) {
     $formatter = new FailedRollbackFormatter();
     echo $formatter->format($exception) . PHP_EOL;

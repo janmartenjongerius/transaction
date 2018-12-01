@@ -1,14 +1,9 @@
 # Introduction
 
-Warp pipe handles operations with automatic rollback mechanisms.
+Transaction handles operations with automatic rollback mechanisms.
 
-Warp pipe uses a pipe to process operations. When an operation fails, it
-traverses back up the chain, rolling back all previous operations in reverse
-order.
-
-||
-|:--------------------------------:|
-| ![Warp pipe](docs/warp-pipe.png) |
+A transaction consists of operations. When an operation fails, it traverses back
+up the chain, rolling back all previous operations in reverse order.
 
 Assume a situation where filesystem operations need to be automated. If a part
 of the operations fail, the filesystem needs to be restored to the state before
@@ -36,26 +31,26 @@ constructed vertically.
 # Installation
 
 ```
-composer require johmanx10/warp-pipe
+composer require johmanx10/transaction
 ```
 
 # Processing operations
 
-To process a list of ordered operations, use a pipe:
+To process a list of ordered operations, use a transaction:
 
 ```php
 <?php
-use Johmanx10\WarpPipe\Pipe;
-use Johmanx10\WarpPipe\OperationInterface;
-use Johmanx10\WarpPipe\Exception\OperationRolledBackException;
-use Johmanx10\WarpPipe\Exception\FailedRollbackException;
-
-$pipe = new Pipe();
+use Johmanx10\Transaction\Transaction;
+use Johmanx10\Transaction\OperationInterface;
+use Johmanx10\Transaction\Exception\TransactionRolledBackException;
+use Johmanx10\Transaction\Exception\FailedRollbackException;
 
 /** @var OperationInterface[] $operations */
+$transaction = new Transaction(...$operations);
+
 try {
-    $pipe(...$operations);
-} catch (OperationRolledBackException $rollback) {
+    $transaction->commit();
+} catch (TransactionRolledBackException $rollback) {
     // Do something with the operations that were rolled back.
     // This exception contains a method to get all failed operations, paired
     // with any exception that triggered the rollback.
@@ -75,11 +70,12 @@ and inline operation:
 
 ```php
 <?php
-use Johmanx10\WarpPipe\Operation;
+use Johmanx10\Transaction\Operation;
+use Johmanx10\Transaction\Transaction;
 
 $appDir = __DIR__ . '/my-app';
 
-$operations = [
+$transaction = new Transaction(
     // Create the app directory.
     new Operation(
         // Create the new directory.
@@ -101,7 +97,7 @@ $operations = [
         // Set the operation description.
         sprintf('Create directory: "%s"', $appDir)
     )
-];
+);
 ```
 
 # Formatting operations and exceptions
@@ -119,8 +115,8 @@ a generic representation, with a unique identifier for the operation.
 
 ```php
 <?php
-use Johmanx10\WarpPipe\OperationInterface;
-use Johmanx10\WarpPipe\Formatter\OperationFormatterInterface;
+use Johmanx10\Transaction\OperationInterface;
+use Johmanx10\Transaction\Formatter\OperationFormatterInterface;
 
 /**
  * @var OperationFormatterInterface $formatter
@@ -156,21 +152,21 @@ In order, these show an operation failure with and without exception:
 ## Rollback formatter
 
 The rollback formatter can be used to format caught instances of
-`OperationRolledBackException`. 
+`TransactionRolledBackException`. 
 
 ```php
 <?php
-use Johmanx10\WarpPipe\Pipe;
-use Johmanx10\WarpPipe\OperationInterface;
-use Johmanx10\WarpPipe\Exception\OperationRolledBackException;
-use Johmanx10\WarpPipe\Formatter\RollbackFormatter;
-
-$pipe = new Pipe();
+use Johmanx10\Transaction\Transaction;
+use Johmanx10\Transaction\OperationInterface;
+use Johmanx10\Transaction\Exception\TransactionRolledBackException;
+use Johmanx10\Transaction\Formatter\RollbackFormatter;
 
 /** @var OperationInterface[] $operations */
+$transaction = new Transaction(...$operations);
+
 try {
-    $pipe(...$operations);
-} catch (OperationRolledBackException $rollback) {
+    $transaction->commit();
+} catch (TransactionRolledBackException $rollback) {
     $formatter = new RollbackFormatter();
     echo $formatter->format($rollback) . PHP_EOL;
 }
@@ -204,16 +200,16 @@ using the failed rollback formatter:
 
 ```php
 <?php
-use Johmanx10\WarpPipe\Pipe;
-use Johmanx10\WarpPipe\OperationInterface;
-use Johmanx10\WarpPipe\Exception\FailedRollbackException;
-use Johmanx10\WarpPipe\Formatter\FailedRollbackFormatter;
-
-$pipe = new Pipe();
+use Johmanx10\Transaction\Transaction;
+use Johmanx10\Transaction\OperationInterface;
+use Johmanx10\Transaction\Exception\FailedRollbackException;
+use Johmanx10\Transaction\Formatter\FailedRollbackFormatter;
 
 /** @var OperationInterface[] $operations */
+$transaction = new Transaction(...$operations);
+
 try {
-    $pipe(...$operations);
+    $transaction->commit();
 } catch (FailedRollbackException $rollback) {
     $formatter = new FailedRollbackFormatter();
     echo $formatter->format($rollback) . PHP_EOL;

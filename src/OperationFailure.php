@@ -4,7 +4,7 @@
  * https://www.mediact.nl
  */
 
-namespace Johmanx10\WarpPipe;
+namespace Johmanx10\Transaction;
 
 use Throwable;
 

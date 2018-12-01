@@ -4,37 +4,66 @@
  * https://www.mediact.nl
  */
 
-namespace Johmanx10\WarpPipe;
+namespace Johmanx10\Transaction;
 
-use Johmanx10\WarpPipe\Exception\FailedRollbackException;
-use Johmanx10\WarpPipe\Exception\OperationRolledBackException;
+use Johmanx10\Transaction\Exception\FailedRollbackException;
+use Johmanx10\Transaction\Exception\TransactionRolledBackException;
 use SplDoublyLinkedList;
 use Throwable;
 
-class Pipe implements PipeInterface
+class Transaction implements TransactionInterface
 {
+    /** @var OperationInterface[] */
+    private $operations;
+
+    /** @var bool */
+    private $committed = false;
+
     /**
-     * Invoke the operations in order.
+     * Constructor.
+     *
+     * @param OperationInterface ...$operations
+     */
+    public function __construct(OperationInterface ...$operations)
+    {
+        $this->operations = $operations;
+    }
+
+    /**
+     * Commit the operations in the transaction.
      * Roll back operations in reverse order, from the point where a throwable
      * was caught.
      *
-     * @param OperationInterface ...$operations
-     *
      * @return void
      *
-     * @throws OperationRolledBackException When operations are rolled back.
+     * @throws TransactionRolledBackException When the transaction was
+     *   rolled back.
      */
-    public function __invoke(OperationInterface ...$operations): void
+    public function commit(): void
     {
-        $queue = $this->createQueue(...$operations);
+        if ($this->committed === false) {
+            $queue = $this->createQueue(...$this->operations);
 
-        try {
-            $this->process($queue);
-        } catch (Throwable $exception) {
-            throw new OperationRolledBackException(
-                ...$this->rollback($exception, $queue)
-            );
+            try {
+                $this->process($queue);
+            } catch (Throwable $exception) {
+                throw new TransactionRolledBackException(
+                    ...$this->rollback($exception, $queue)
+                );
+            }
         }
+
+        $this->committed = true;
+    }
+
+    /**
+     * Whether the current transaction is committed successfully.
+     *
+     * @return bool
+     */
+    public function isCommitted(): bool
+    {
+        return $this->committed;
     }
 
     /**

@@ -4,7 +4,7 @@
  * https://www.mediact.nl
  */
 
-namespace Johmanx10\WarpPipe\Formatter;
+namespace Johmanx10\Transaction\Formatter;
 
 use Throwable;
 

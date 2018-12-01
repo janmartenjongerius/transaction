@@ -4,18 +4,20 @@
  * https://www.mediact.nl
  */
 
-namespace Johmanx10\WarpPipe\Formatter;
+namespace Johmanx10\Transaction\Formatter;
 
-use Johmanx10\WarpPipe\Exception\OperationRolledBackExceptionInterface;
+use Johmanx10\Transaction\Exception\TransactionRolledBackExceptionInterface;
 
 interface RollbackFormatterInterface
 {
     /**
      * Format the given rollback exception into a readable string.
      *
-     * @param OperationRolledBackExceptionInterface $rollback
+     * @param TransactionRolledBackExceptionInterface $rollback
      *
      * @return string
      */
-    public function format(OperationRolledBackExceptionInterface $rollback): string;
+    public function format(
+        TransactionRolledBackExceptionInterface $rollback
+    ): string;
 }

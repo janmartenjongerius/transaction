@@ -4,10 +4,10 @@
  * https://www.mediact.nl
  */
 
-namespace Johmanx10\WarpPipe\Exception;
+namespace Johmanx10\Transaction\Exception;
 
-use Johmanx10\WarpPipe\OperationFailureInterface;
-use Johmanx10\WarpPipe\OperationInterface;
+use Johmanx10\Transaction\OperationFailureInterface;
+use Johmanx10\Transaction\OperationInterface;
 use Throwable;
 
 interface FailedRollbackExceptionInterface extends Throwable

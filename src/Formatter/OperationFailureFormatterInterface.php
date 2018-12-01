@@ -4,9 +4,9 @@
  * https://www.mediact.nl
  */
 
-namespace Johmanx10\WarpPipe\Formatter;
+namespace Johmanx10\Transaction\Formatter;
 
-use Johmanx10\WarpPipe\OperationFailureInterface;
+use Johmanx10\Transaction\OperationFailureInterface;
 
 interface OperationFailureFormatterInterface
 {

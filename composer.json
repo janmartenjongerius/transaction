@@ -1,6 +1,11 @@
 {
-    "name": "johmanx10/warp-pipe",
+    "name": "johmanx10/transaction",
     "description": "Handles operations with automatic rollback mechanisms.",
+    "keywords": [
+        "transaction",
+        "rollback",
+        "commit"
+    ],
     "type": "library",
     "license": "MIT",
     "authors": [
@@ -20,7 +25,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Johmanx10\\WarpPipe\\": "src"
+            "Johmanx10\\Transaction\\": "src"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Johmanx10\\Transaction\\Tests\\": "tests"
         }
     },
     "extra": {
@@ -35,7 +45,8 @@
             "/phpmd.xml",
             "/phpstan.neon",
             "/phpcs.xml",
-            "/examples"
+            "/examples",
+            "/tests"
         ]
     },
     "config": {

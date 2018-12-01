@@ -4,10 +4,10 @@
  * https://www.mediact.nl
  */
 
-namespace Johmanx10\WarpPipe\Formatter;
+namespace Johmanx10\Transaction\Formatter;
 
-use Johmanx10\WarpPipe\DescribableOperationInterface;
-use Johmanx10\WarpPipe\OperationInterface;
+use Johmanx10\Transaction\DescribableOperationInterface;
+use Johmanx10\Transaction\OperationInterface;
 
 class OperationFormatter implements OperationFormatterInterface
 {

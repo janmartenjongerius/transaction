@@ -4,9 +4,9 @@
  * https://www.mediact.nl
  */
 
-namespace Johmanx10\WarpPipe\Formatter;
+namespace Johmanx10\Transaction\Formatter;
 
-use Johmanx10\WarpPipe\Exception\FailedRollbackExceptionInterface;
+use Johmanx10\Transaction\Exception\FailedRollbackExceptionInterface;
 
 interface FailedRollbackFormatterInterface
 {

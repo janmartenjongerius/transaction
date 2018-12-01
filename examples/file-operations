@@ -2,17 +2,17 @@
 <?php
 require_once __DIR__ . '/../vendor/autoload.php';
 
-use Johmanx10\WarpPipe\Formatter\RollbackFormatter;
-use Johmanx10\WarpPipe\OperationInterface;
-use Johmanx10\WarpPipe\Exception\OperationRolledBackException;
-use Johmanx10\WarpPipe\Pipe;
-use Johmanx10\WarpPipe\Operation;
+use Johmanx10\Transaction\Formatter\RollbackFormatter;
+use Johmanx10\Transaction\OperationInterface;
+use Johmanx10\Transaction\Exception\TransactionRolledBackException;
+use Johmanx10\Transaction\Transaction;
+use Johmanx10\Transaction\Operation;
 
 $appDir             = __DIR__ . '/my-app';
 $consoleSource      = realpath(__DIR__ . '/../vendor/bin/composer');
 $consoleDestination = $appDir . '/bin/console';
 
-$operations = [
+$transaction = new Transaction(
     // Create the app directory.
     new Operation(
         // Create the new directory.
@@ -120,13 +120,11 @@ $operations = [
             }
         }
     }
-];
-
-$pipe = new Pipe();
+);
 
 try {
-    $pipe(...$operations);
-} catch (OperationRolledBackException $rollback) {
+    $transaction->commit();
+} catch (TransactionRolledBackException $rollback) {
     $rollbackFormatter = new RollbackFormatter();
     echo $rollbackFormatter->format($rollback) . PHP_EOL;
 }
