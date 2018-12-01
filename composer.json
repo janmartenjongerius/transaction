@@ -24,6 +24,9 @@
         "mediact/testing-suite": "@stable"
     },
     "autoload": {
+        "files": [
+            "src/polyfill-spl.php"
+        ],
         "psr-4": {
             "Johmanx10\\Transaction\\": "src"
         }
@@ -46,7 +49,8 @@
             "/phpstan.neon",
             "/phpcs.xml",
             "/examples",
-            "/tests"
+            "/tests",
+            "/.gitattributes"
         ]
     },
     "config": {
