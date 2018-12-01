@@ -12,7 +12,6 @@ build:
         override:
           - php-scrutinizer-run
           - command: phpcs-run
-            use_website_config: true
           - command: 'vendor/bin/phpunit --coverage-clover=coverage.xml'
             coverage:
               file: 'coverage.xml'
