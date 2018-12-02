@@ -14,7 +14,7 @@ class FailedRollbackFormatter implements FailedRollbackFormatterInterface
     /** @var OperationFormatterInterface */
     private $operationFormatter;
 
-    /** @var ExceptionFormatterInterface|null */
+    /** @var ExceptionFormatterInterface */
     private $exceptionFormatter;
 
     /** @var OperationFailureFormatterInterface */
