@@ -61,7 +61,7 @@ class OperationFailureFormatter implements OperationFailureFormatterInterface
             : sprintf(
                 '%s ✔ %s',
                 $identifier,
-                $this->operationFormatter->format($failure->getOperation())
+                $this->operationFormatter->format($operation)
             );
     }
 }
