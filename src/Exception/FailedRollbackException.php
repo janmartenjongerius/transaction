@@ -24,13 +24,13 @@ class FailedRollbackException extends RuntimeException implements FailedRollback
      *
      * @param OperationInterface        $operation
      * @param int                       $code
-     * @param Throwable|null            $previous
+     * @param Throwable                 $previous
      * @param OperationFailureInterface ...$previousRollbacks
      */
     public function __construct(
         OperationInterface $operation,
-        int $code = 0,
-        Throwable $previous = null,
+        int $code,
+        Throwable $previous,
         OperationFailureInterface ...$previousRollbacks
     ) {
         $this->operation         = $operation;

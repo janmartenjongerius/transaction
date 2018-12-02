@@ -10,6 +10,7 @@ use Johmanx10\Transaction\OperationFailureInterface;
 use Johmanx10\Transaction\OperationInterface;
 use PHPUnit\Framework\TestCase;
 use Johmanx10\Transaction\Exception\FailedRollbackException;
+use Throwable;
 
 /**
  * @coversDefaultClass \Johmanx10\Transaction\Exception\FailedRollbackException
@@ -51,7 +52,7 @@ class FailedRollbackExceptionTest extends TestCase
         $subject = new FailedRollbackException(
             $this->createMock(OperationInterface::class),
             0,
-            null,
+            $this->createMock(Throwable::class),
             ...$previousRollbacks
         );
 
