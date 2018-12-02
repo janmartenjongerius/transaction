@@ -1,4 +1,6 @@
 [![Build Status](https://scrutinizer-ci.com/g/johmanx10/transaction/badges/build.png?b=master)](https://scrutinizer-ci.com/g/johmanx10/transaction/build-status/master)
+[![Packagist](https://img.shields.io/packagist/dt/johmanx10/transaction.png)](https://packagist.org/packages/johmanx10/transaction/stats)
+[![Packagist](https://img.shields.io/packagist/v/johmanx10/transaction.png)](https://packagist.org/packages/johmanx10/transaction)
 ![PHP from Packagist](https://img.shields.io/packagist/php-v/johmanx10/transaction.svg)
 [![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/johmanx10/transaction/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/johmanx10/transaction/?branch=master)
 [![Code Coverage](https://scrutinizer-ci.com/g/johmanx10/transaction/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/johmanx10/transaction/?branch=master)
