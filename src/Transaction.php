@@ -96,7 +96,9 @@ class Transaction implements TransactionInterface
                     $operation,
                     0,
                     $rollbackException,
+                    // @codeCoverageIgnoreStart
                     ...$failures
+                    // @codeCoverageIgnoreEnd
                 );
             }
 
