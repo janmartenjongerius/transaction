@@ -10,6 +10,7 @@ use Exception;
 use Johmanx10\Transaction\Exception\FailedRollbackException;
 use Johmanx10\Transaction\Exception\TransactionRolledBackException;
 use Johmanx10\Transaction\OperationInterface;
+use Johmanx10\Transaction\Visitor\OperationVisitorInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Johmanx10\Transaction\Transaction;
@@ -152,6 +153,60 @@ class TransactionTest extends TestCase
             TransactionRolledBackException::class,
             $exception
         );
+    }
+
+    /**
+     * @dataProvider successfulOperationProvider
+     *
+     * @param OperationInterface ...$operations
+     *
+     * @return void
+     *
+     * @covers ::commit
+     * @covers ::process
+     */
+    public function testVisitors(OperationInterface ...$operations): void
+    {
+        /** @var OperationVisitorInterface|MockObject $visitor */
+        $visitor = $this->createMock(OperationVisitorInterface::class);
+        $subject = new Transaction(...$operations);
+
+        $visitor
+            ->expects(self::exactly(3 * count($operations)))
+            ->method('__invoke')
+            ->with(self::isInstanceOf(OperationInterface::class));
+
+        $subject->commit($visitor, $visitor, $visitor);
+
+        $this->assertTrue($subject->isCommitted());
+    }
+
+    /**
+     * @dataProvider rollbackOperationProvider
+     *
+     * @param OperationInterface ...$operations
+     *
+     * @return void
+     *
+     * @covers ::commit
+     * @covers ::process
+     */
+    public function testVisitorsOnFailure(OperationInterface ...$operations): void
+    {
+        /** @var OperationVisitorInterface|MockObject $visitor */
+        $visitor = $this->createMock(OperationVisitorInterface::class);
+        $subject = new Transaction(...$operations);
+
+        $visitor
+            ->expects(self::atMost(3 * count($operations)))
+            ->method('__invoke')
+            ->with(self::isInstanceOf(OperationInterface::class));
+
+        try {
+            $subject->commit($visitor, $visitor, $visitor);
+        } catch (Throwable $exception) {
+            $this->assertFalse($subject->isCommitted());
+        }
     }
 
     /**
