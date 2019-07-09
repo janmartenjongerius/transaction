@@ -21,7 +21,11 @@
         "ext-SPL": "^7.2"
     },
     "require-dev": {
-        "mediact/testing-suite": "@stable"
+        "mediact/testing-suite": "@stable",
+        "psr/log": "^1.0"
+    },
+    "suggest": {
+        "psr/log": "To log operations."
     },
     "autoload": {
         "psr-4": {
