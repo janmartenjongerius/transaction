@@ -10,6 +10,7 @@ use Johmanx10\Transaction\Operation;
 use Johmanx10\Transaction\Transaction;
 use Johmanx10\Transaction\Visitor\LogOperationVisitor;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LogLevel;
 use Psr\Log\Test\TestLogger;
 
 class LoggingTransactionTest extends TestCase
@@ -21,7 +22,7 @@ class LoggingTransactionTest extends TestCase
     public function testLogVisitorLogsOperationsInTransaction(): void
     {
         $logger      = new TestLogger();
-        $visitor     = new LogOperationVisitor($logger);
+        $visitor     = new LogOperationVisitor($logger, null, LogLevel::EMERGENCY);
         $description = 'Performing operation within ' . __METHOD__;
         $transaction = new Transaction(
             new Operation(
@@ -36,7 +37,7 @@ class LoggingTransactionTest extends TestCase
         $transaction->commit($visitor);
 
         $this->assertTrue(
-            $logger->hasInfo($description),
+            $logger->hasRecord($description, LogLevel::EMERGENCY),
             'The logger receives a description of the operation to be executed.'
         );
     }

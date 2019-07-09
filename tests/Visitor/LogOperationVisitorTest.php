@@ -4,7 +4,7 @@
  * https://www.mediact.nl
  */
 
-namespace Johmanx10\Transaction\Tests;
+namespace Johmanx10\Transaction\Tests\Visitor;
 
 use Johmanx10\Transaction\Formatter\OperationFormatterInterface;
 use Johmanx10\Transaction\OperationInterface;
@@ -12,6 +12,7 @@ use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
 use Johmanx10\Transaction\Visitor\LogOperationVisitor;
 use Psr\Log\LoggerInterface;
+use Psr\Log\LogLevel;
 
 /**
  * @coversDefaultClass \Johmanx10\Transaction\Visitor\LogOperationVisitor
@@ -39,6 +40,15 @@ class LogOperationVisitorTest extends TestCase
                 $this->createMock(OperationFormatterInterface::class)
             )
         );
+
+        $this->assertInstanceOf(
+            LogOperationVisitor::class,
+            new LogOperationVisitor(
+                $this->createMock(LoggerInterface::class),
+                $this->createMock(OperationFormatterInterface::class),
+                LogLevel::DEBUG
+            )
+        );
     }
 
     /**
@@ -54,12 +64,12 @@ class LogOperationVisitorTest extends TestCase
         /** @var OperationFormatterInterface|MockObject $formatter */
         $formatter = $this->createMock(OperationFormatterInterface::class);
 
-        $subject = new LogOperationVisitor($logger, $formatter);
+        $subject = new LogOperationVisitor($logger, $formatter, LogLevel::ALERT);
 
         $logger
             ->expects(self::once())
-            ->method('info')
-            ->with('Operation foo');
+            ->method('log')
+            ->with(LogLevel::ALERT, 'Operation foo');
 
         $formatter
             ->expects(self::once())
