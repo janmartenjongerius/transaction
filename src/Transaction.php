@@ -8,10 +8,12 @@ namespace Johmanx10\Transaction;
 
 use Johmanx10\Transaction\Exception\FailedRollbackException;
 use Johmanx10\Transaction\Exception\TransactionRolledBackException;
+use Johmanx10\Transaction\Visitor\AcceptingTransactionInterface;
+use Johmanx10\Transaction\Visitor\OperationVisitorInterface;
 use SplDoublyLinkedList;
 use Throwable;
 
-class Transaction implements TransactionInterface
+class Transaction implements AcceptingTransactionInterface
 {
     /** @var OperationInterface[] */
     private $operations;
@@ -34,18 +36,20 @@ class Transaction implements TransactionInterface
      * Roll back operations in reverse order, from the point where a throwable
      * was caught.
      *
+     * @param OperationVisitorInterface ...$visitors
+     *
      * @return void
      *
      * @throws TransactionRolledBackException When the transaction was
      *   rolled back.
      */
-    public function commit(): void
+    public function commit(OperationVisitorInterface ...$visitors): void
     {
         if ($this->committed === false) {
             $queue = $this->createQueue(...$this->operations);
 
             try {
-                $this->process($queue);
+                $this->process($queue, ...$visitors);
             } catch (Throwable $exception) {
                 throw new TransactionRolledBackException(
                     ...$this->rollback($exception, $queue)
@@ -113,11 +117,14 @@ class Transaction implements TransactionInterface
      * Process the queued operations.
      *
      * @param SplDoublyLinkedList|OperationInterface[] $queue
+     * @param OperationVisitorInterface                ...$visitors
      *
      * @return void
      */
-    private function process(SplDoublyLinkedList $queue): void
-    {
+    private function process(
+        SplDoublyLinkedList $queue,
+        OperationVisitorInterface ...$visitors
+    ): void {
         // Set the iterator to process operations in order.
         // First in goes first out and the queue is kept in-tact while traversing.
         $queue->setIteratorMode(
@@ -129,6 +136,11 @@ class Transaction implements TransactionInterface
         for ($queue->rewind(); $queue->valid(); $queue->next()) {
             /** @var OperationInterface $operation */
             $operation = $queue->current();
+
+            foreach ($visitors as $visitor) {
+                $visitor($operation);
+            }
+
             $operation->__invoke();
         }
     }

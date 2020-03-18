@@ -259,3 +259,32 @@ And if there have been previous rollbacks, the following is appended:
 Previous rollbacks:
 {previousRollbacks}
 ```
+
+# Visiting operations
+
+The default implementation of `Transaction` implements the interface
+`\Johmanx10\Transaction\Visitor\AcceptingTransactionInterface`, allowing it to
+accept operation visitors, implementing
+`\Johmanx10\Transaction\Visitor\OperationVisitorInterface`.
+
+This can be used to gather information about operations that are executed during
+a transaction commit.
+
+The following shows how to log every operation that is about to be executed
+within the transaction:
+
+```php
+<?php
+use Johmanx10\Transaction\OperationInterface;
+use Johmanx10\Transaction\Transaction;
+use Johmanx10\Transaction\Visitor\LogOperationVisitor;
+use Psr\Log\LoggerInterface;
+
+/** @var LoggerInterface $logger */
+$visitor = new LogOperationVisitor($logger);
+
+/** @var OperationInterface[] $operations */
+$transaction = new Transaction(...$operations);
+
+$transaction->commit($visitor);
+```
