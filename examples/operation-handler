@@ -1,0 +1,64 @@
+#!/usr/bin/env php
+<?php
+
+use Johmanx10\Transaction\Exception\TransactionRolledBackException;
+use Johmanx10\Transaction\Formatter\RollbackFormatter;
+use Johmanx10\Transaction\Operation;
+use Johmanx10\Transaction\OperationHandler;
+use Johmanx10\Transaction\Visitor\LogOperationVisitor;
+use Psr\Log\Test\TestLogger;
+
+require_once __DIR__ . '/../vendor/autoload.php';
+
+$logger = new TestLogger();
+
+$handler = new OperationHandler();
+$handler->attachVisitor(
+    new LogOperationVisitor($logger)
+);
+
+$operations = [
+    new Operation(
+        function (): void {
+            // no-op
+        },
+        function (): void {
+            // no-op
+        },
+        'No-op #1.'
+    ),
+    new Operation(
+        function () use ($logger): void {
+            $logger->info('Performing demo failure operation.');
+            throw new RuntimeException('Demo failed on-purpose.');
+        },
+        function () use ($logger): void {
+            $logger->info('Rolling back demo failure operation.');
+        },
+        'Demo failure operation.'
+    ),
+    new Operation(
+        function (): void {
+            // no-op
+        },
+        function (): void {
+            // no-op
+        },
+        'No-op #2.'
+    )
+];
+
+try {
+    $handler->handle(...$operations);
+} catch (TransactionRolledBackException $exception) {
+    $formatter = new RollbackFormatter();
+    $logger->error($formatter->format($exception));
+} finally {
+    foreach ($logger->records as $record) {
+        echo sprintf(
+            "[%s]\t%s",
+            $record['level'],
+            $record['message']
+        ) . PHP_EOL;
+    }
+}
