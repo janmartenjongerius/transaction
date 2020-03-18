@@ -51,7 +51,8 @@
             "/phpcs.xml",
             "/examples",
             "/tests",
-            "/.gitattributes"
+            "/.gitattributes",
+            "/grumphp.yml"
         ]
     },
     "config": {
