@@ -4,15 +4,15 @@
  * https://www.mediact.nl
  */
 
-namespace Johmanx10\Transaction\Tests;
+namespace Johmanx10\Transaction\Tests\Visitor;
 
 use Johmanx10\Transaction\OperationInterface;
 use Johmanx10\Transaction\TransactionInterface;
 use PHPUnit\Framework\TestCase;
-use Johmanx10\Transaction\TransactionFactory;
+use Johmanx10\Transaction\Visitor\TransactionFactory;
 
 /**
- * @coversDefaultClass \Johmanx10\Transaction\TransactionFactory
+ * @coversDefaultClass \Johmanx10\Transaction\Visitor\TransactionFactory
  */
 class TransactionFactoryTest extends TestCase
 {

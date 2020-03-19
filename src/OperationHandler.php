@@ -8,6 +8,8 @@ namespace Johmanx10\Transaction;
 
 use Johmanx10\Transaction\Visitor\OperationVisitorAwareInterface;
 use Johmanx10\Transaction\Visitor\OperationVisitorInterface;
+use Johmanx10\Transaction\Visitor\TransactionFactory;
+use Johmanx10\Transaction\Visitor\TransactionFactoryInterface;
 
 class OperationHandler implements
     OperationHandlerInterface,

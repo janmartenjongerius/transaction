@@ -7,8 +7,8 @@
 namespace Johmanx10\Transaction\Tests;
 
 use Johmanx10\Transaction\OperationInterface;
-use Johmanx10\Transaction\TransactionFactoryInterface;
-use Johmanx10\Transaction\TransactionInterface;
+use Johmanx10\Transaction\Visitor\AcceptingTransactionInterface;
+use Johmanx10\Transaction\Visitor\TransactionFactoryInterface;
 use Johmanx10\Transaction\Visitor\OperationVisitorInterface;
 use PHPUnit\Framework\MockObject\MockObject;
 use PHPUnit\Framework\TestCase;
@@ -51,14 +51,14 @@ class OperationHandlerTest extends TestCase
         $visitorA = $this->createMock(OperationVisitorInterface::class);
         $visitorB = $this->createMock(OperationVisitorInterface::class);
 
-        /** @var TransactionFactoryInterface|MockObject $factory */
+        /** @var \Johmanx10\Transaction\Visitor\TransactionFactoryInterface|MockObject $factory */
         $factory = $this->createMock(TransactionFactoryInterface::class);
 
         $subject = new OperationHandler($factory);
         $subject->attachVisitor($visitorA, $visitorB);
 
-        $transactionA = $this->createMock(TransactionInterface::class);
-        $transactionB = $this->createMock(TransactionInterface::class);
+        $transactionA = $this->createMock(AcceptingTransactionInterface::class);
+        $transactionB = $this->createMock(AcceptingTransactionInterface::class);
 
         $factory
             ->expects(self::exactly(2))
