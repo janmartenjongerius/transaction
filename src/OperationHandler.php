@@ -16,6 +16,19 @@ class OperationHandler implements
     /** @var OperationVisitorInterface[] */
     private $visitors = [];
 
+    /** @var TransactionFactoryInterface */
+    private $factory;
+
+    /**
+     * Constructor.
+     *
+     * @param TransactionFactoryInterface|null $factory
+     */
+    public function __construct(TransactionFactoryInterface $factory = null)
+    {
+        $this->factory = $factory ?? new TransactionFactory();
+    }
+
     /**
      * Handle the given operations.
      *
@@ -25,8 +38,10 @@ class OperationHandler implements
      */
     public function handle(OperationInterface ...$operations): void
     {
-        $transaction = new Transaction(...$operations);
-        $transaction->commit(...array_values($this->visitors));
+        $this
+            ->factory
+            ->createTransaction(...$operations)
+            ->commit(...array_values($this->visitors));
     }
 
     /**
