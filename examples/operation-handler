@@ -1,8 +1,7 @@
 #!/usr/bin/env php
 <?php
 
-use Johmanx10\Transaction\Exception\TransactionRolledBackException;
-use Johmanx10\Transaction\Formatter\RollbackFormatter;
+use Johmanx10\Transaction\Exception\OperationExceptionInterface;
 use Johmanx10\Transaction\Operation;
 use Johmanx10\Transaction\OperationHandler;
 use Johmanx10\Transaction\Visitor\LogOperationVisitor;
@@ -50,9 +49,8 @@ $operations = [
 
 try {
     $handler->handle(...$operations);
-} catch (TransactionRolledBackException $exception) {
-    $formatter = new RollbackFormatter();
-    $logger->error($formatter->format($exception));
+} catch (OperationExceptionInterface $exception) {
+    $logger->error($exception->getMessage());
 } finally {
     foreach ($logger->records as $record) {
         echo sprintf(

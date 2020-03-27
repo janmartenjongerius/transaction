@@ -82,10 +82,11 @@ try {
 
 The operation handler is better suited in a service oriented application.
 It allows to prepare visitors separate from the invoking code and thus separates
-concerns about operations and their visitors.
+concerns about operations and their [visitors](#visiting-operations).
 
 ```php
 <?php
+use Johmanx10\Transaction\Exception\OperationExceptionInterface;
 use Johmanx10\Transaction\OperationHandler;
 use Johmanx10\Transaction\OperationInterface;
 use Johmanx10\Transaction\Visitor\LogOperationVisitor;
@@ -97,12 +98,23 @@ $handler->attachVisitor(
     new LogOperationVisitor($logger)
 );;
 
-/** @var OperationInterface[] $operations */
-$handler->handle(...$operations);
+try {
+    /** @var OperationInterface[] $operations */
+    $handler->handle(...$operations);
+} catch (OperationExceptionInterface $exception) {
+    // Get the formatted internal exception.
+    $formatted = $exception->getMessage();
+
+    // Get the operation that caused the exception.
+    $operation = $exception->getOperation();
+
+    // Get the exception that shows the context of the failure.
+    $context = $exception->getPrevious();
+}
 ```
 
-The handler will internally use a transaction and thus exceptions can be caught
-and handled exactly as one would for a transaction.
+The operation exception removes a lot of boiler plate code caused by the different
+[exception formatters](#formatting-operations-and-exceptions).
 
 See [a working example](examples/operation-handler) by running:
 
