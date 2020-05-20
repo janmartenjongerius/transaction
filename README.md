@@ -45,7 +45,12 @@ composer require johmanx10/transaction
 
 # Processing operations
 
-To process a list of ordered operations, use a transaction:
+To process a list of ordered operations, either use a transaction, or a handler.
+
+## Transaction
+
+A transaction is more straight-forward and better suited to less complicated
+transactional scripts.
 
 ```php
 <?php
@@ -53,12 +58,14 @@ use Johmanx10\Transaction\Transaction;
 use Johmanx10\Transaction\OperationInterface;
 use Johmanx10\Transaction\Exception\TransactionRolledBackException;
 use Johmanx10\Transaction\Exception\FailedRollbackException;
+use Johmanx10\Transaction\Visitor\OperationVisitorInterface;
 
 /** @var OperationInterface[] $operations */
 $transaction = new Transaction(...$operations);
 
 try {
-    $transaction->commit();
+    /** @var OperationVisitorInterface[] $visitors */
+    $transaction->commit(...$visitors);
 } catch (TransactionRolledBackException $rollback) {
     // Do something with the operations that were rolled back.
     // This exception contains a method to get all failed operations, paired
@@ -69,6 +76,50 @@ try {
     // operations that have successfully rolled back up to the point where the
     // current operation could not.
 }
+```
+
+## Operation Handler
+
+The operation handler is better suited in a service oriented application.
+It allows to prepare visitors separate from the invoking code and thus separates
+concerns about operations and their [visitors](#visiting-operations).
+
+```php
+<?php
+use Johmanx10\Transaction\Exception\OperationExceptionInterface;
+use Johmanx10\Transaction\OperationHandler;
+use Johmanx10\Transaction\OperationInterface;
+use Johmanx10\Transaction\Visitor\LogOperationVisitor;
+use Psr\Log\LoggerInterface;
+
+$handler = new OperationHandler();
+$handler->attachVisitor(
+    /** @var LoggerInterface $logger */
+    new LogOperationVisitor($logger)
+);;
+
+try {
+    /** @var OperationInterface[] $operations */
+    $handler->handle(...$operations);
+} catch (OperationExceptionInterface $exception) {
+    // Get the formatted internal exception.
+    $formatted = $exception->getMessage();
+
+    // Get the operation that caused the exception.
+    $operation = $exception->getOperation();
+
+    // Get the exception that shows the context of the failure.
+    $context = $exception->getPrevious();
+}
+```
+
+The operation exception removes a lot of boiler plate code caused by the different
+[exception formatters](#formatting-operations-and-exceptions).
+
+See [a working example](examples/operation-handler) by running:
+
+```
+examples/operation-handler
 ```
 
 # Defining an operation
