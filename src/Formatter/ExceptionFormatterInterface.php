@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Johmanx10\Transaction\Formatter;
 
 use Throwable;

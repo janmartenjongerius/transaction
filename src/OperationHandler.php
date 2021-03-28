@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Johmanx10\Transaction;
 
 use Johmanx10\Transaction\Exception\OperationExceptionFactory;

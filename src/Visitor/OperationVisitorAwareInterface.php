@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Johmanx10\Transaction\Visitor;
 
 interface OperationVisitorAwareInterface

@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Johmanx10\Transaction\Exception;
 
 use Johmanx10\Transaction\Formatter\ExceptionFormatter;

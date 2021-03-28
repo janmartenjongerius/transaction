@@ -1,6 +1,5 @@
 <?php
 
-
 namespace Johmanx10\Transaction\Visitor;
 
 use Johmanx10\Transaction\Exception\TransactionRolledBackExceptionInterface;
