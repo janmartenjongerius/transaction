@@ -1,8 +1,5 @@
 <?php
-/**
- * Copyright MediaCT. All rights reserved.
- * https://www.mediact.nl
- */
+
 
 namespace Johmanx10\Transaction\Tests\Formatter;
 

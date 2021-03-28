@@ -1,55 +1,51 @@
-imports:
-  - resource: 'vendor/mediact/testing-suite/config/default/grumphp.yml'
+grumphp:
+  ascii:
+    failed: ~
+    succeeded: ~
 
-parameters:
+  parallel:
+    enabled: false
 
-  # Default settings for testing suite tasks
-  composer.strict: true
-  composer.metadata.priority: 1400
+  tasks:
+    composer:
+      strict: true
 
-  jsonlint.detect_key_conflicts: true
-  jsonlint.metadata.priority: 1200
+    jsonlint:
+      detect_key_conflicts: true
 
-  xmllint.load_from_net: true
-  xmllint.x_include: true
-  xmllint.dtd_validation: true
-  xmllint.scheme_validation: true
-  xmllint.triggered_by: [xml]
-  xmllint.ignore_patterns:
-    # Uses an incomplete definition, which conflicts when <exclude-pattern>
-    # is defined.
-    - /^phpcs.xml$/
-    - /^phpmd.xml$/
-    - /^phpunit.xml$/
-  xmllint.metadata.priority: 1200
+    xmllint:
+      load_from_net: true
+      x_include: true
+      dtd_validation: true
+      scheme_validation: true
+      triggered_by: [xml]
+      ignore_patterns: []
 
-  yamllint.parse_constant: true
-  yamllint.metadata.priority: 1200
+    phpcs:
+      standard: ./phpcs.xml
+      triggered_by: [php]
 
-  phpcs.standard: ./phpcs.xml
-  phpcs.triggered_by: [php]
-  phpcs.metadata.priority: 1000
+    phplint:
+      exclude: [vendor]
+      jobs: ~
+      short_open_tag: false
+      ignore_patterns: []
+      triggered_by: [php]
 
-  phpmd.exclude: []
-  phpmd.ruleset:
-    - ./phpmd.xml
-  phpmd.triggered_by: [php]
-  phpmd.metadata.priority: 800
+    phpmd:
+      exclude: []
+      ruleset: [./phpmd.xml]
+      triggered_by: [php]
 
-  phpstan.autoload_file: ~
-  phpstan.configuration: ./phpstan.neon
-  phpstan.level: 4
-  phpstan.triggered_by: [php]
-  phpstan.metadata.priority: 600
+    phpstan:
+      autoload_file: ~
+      configuration: ./phpstan.neon
+      level: 8
+      triggered_by: [php]
 
-  phpunit.config_file: ./phpunit.xml
-  phpunit.metadata.priority: 400
+    phpunit:
+      config_file: ./phpunit.xml
 
-  securitychecker.lockfile: ./composer.lock
-  securitychecker.format: ~
-  securitychecker.end_point: ~
-  securitychecker.timeout: ~
-  securitychecker.run_always: true
-  securitychecker.metadata.priority: 200
-
-  dependency-guard.metadata.priority: 100
+    securitychecker:
+      lockfile: ./composer.lock
+      run_always: true

@@ -17,12 +17,14 @@
     "minimum-stability": "stable",
     "prefer-stable": true,
     "require": {
-        "php": "^7.2",
-        "ext-SPL": "^7.2"
+        "php": "^8.0",
+        "ext-SPL": "@stable"
     },
     "require-dev": {
-        "mediact/testing-suite": "@stable",
-        "psr/log": "^1.0"
+        "psr/log": "^1.0",
+        "phpunit/phpunit": "@stable",
+        "phpro/grumphp": "@stable",
+        "phpmd/phpmd": "@stable"
     },
     "suggest": {
         "psr/log": "To log operations."
