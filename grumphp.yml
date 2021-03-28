@@ -14,7 +14,7 @@ grumphp:
       detect_key_conflicts: true
 
     xmllint:
-      load_from_net: true
+      load_from_net: false
       x_include: true
       dtd_validation: true
       scheme_validation: true
@@ -22,30 +22,34 @@ grumphp:
       ignore_patterns: []
 
     phpcs:
-      standard: ./phpcs.xml
+      standard: PSR12
       triggered_by: [php]
+      whitelist_patterns: [/^src\/.+/]
 
     phplint:
-      exclude: [vendor]
       jobs: ~
       short_open_tag: false
-      ignore_patterns: []
+      ignore_patterns: [/^vendor\/.+/]
       triggered_by: [php]
 
     phpmd:
-      exclude: []
-      ruleset: [./phpmd.xml]
+      ruleset: [cleancode, codesize, design, naming, unusedcode]
       triggered_by: [php]
+      whitelist_patterns: [/^src\/.+/]
 
     phpstan:
       autoload_file: ~
       configuration: ./phpstan.neon
-      level: 8
+      level: 4
       triggered_by: [php]
 
     phpunit:
       config_file: ./phpunit.xml
 
-    securitychecker:
-      lockfile: ./composer.lock
-      run_always: true
+    phpparser:
+      ignore_patterns: [/^vendor\/.+/]
+      triggered_by: [php]
+      visitors:
+        declare_strict_types: ~
+        never_use_else: ~
+        no_exit_statements: ~

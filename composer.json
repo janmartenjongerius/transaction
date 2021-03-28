@@ -24,7 +24,10 @@
         "psr/log": "^1.0",
         "phpunit/phpunit": "@stable",
         "phpro/grumphp": "@stable",
-        "phpmd/phpmd": "@stable"
+        "phpmd/phpmd": "@stable",
+        "phpstan/phpstan": "@stable",
+        "php-parallel-lint/php-parallel-lint": "@stable",
+        "squizlabs/php_codesniffer": "^3.5.0"
     },
     "suggest": {
         "psr/log": "To log operations."
