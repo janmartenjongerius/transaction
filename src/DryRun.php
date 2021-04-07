@@ -7,7 +7,7 @@ use Johmanx10\Transaction\Operation\Invocation;
 use Johmanx10\Transaction\Operation\OperationInterface;
 use Johmanx10\Transaction\Operation\Result\InvocationResult;
 
-final class Transaction implements TransactionInterface
+final class DryRun implements TransactionInterface
 {
     use Committable;
 
@@ -18,6 +18,13 @@ final class Transaction implements TransactionInterface
 
     private function invoke(Invocation $invocation): InvocationResult
     {
-        return $invocation();
+        // Emulate a successful invocation.
+        return new InvocationResult(
+            $invocation,
+            true,
+            true,
+            null,
+            fn () => false
+        );
     }
 }
