@@ -1,2 +1,8 @@
 /vendor/
 composer.lock
+
+# Local example output.
+/examples/*.d/
+
+# Code coverage output
+/coverage
