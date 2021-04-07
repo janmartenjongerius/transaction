@@ -17,10 +17,10 @@ trait DispatcherAware
     /**
      * Dispatch the given event, if the internal dispatcher is set.
      *
-     * @param object|null $event
+     * @param object $event
      */
-    private function dispatch(?object $event): void
+    private function dispatch(object $event): void
     {
-        $event && $this->dispatcher?->dispatch($event);
+        $this->dispatcher?->dispatch($event);
     }
 }
