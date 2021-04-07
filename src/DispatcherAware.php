@@ -21,8 +21,6 @@ trait DispatcherAware
      */
     private function dispatch(?object $event): void
     {
-        if ($event && $this->dispatcher) {
-            $this->dispatcher->dispatch($event);
-        }
+        $event && $this->dispatcher?->dispatch($event);
     }
 }
