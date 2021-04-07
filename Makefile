@@ -22,7 +22,7 @@ tests: $(SRC) $(TESTS) vendor
 
 .PHONY: tests
 
-COVERAGE : coverage
+COVERAGE = coverage
 
 $(COVERAGE): $(SRC) $(TESTS) vendor
 	$(PHP) vendor/bin/phpunit --coverage-html=$@ && touch $@
