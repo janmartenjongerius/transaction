@@ -45,15 +45,18 @@
     },
     "archive": {
         "exclude": [
+            "/.gitattributes",
             "/.gitignore",
-            "/phpunit.xml",
+            "/.scrutinizer.yml",
+            "/examples",
+            "/grumphp.yml",
+            "/make",
+            "/Makefile",
+            "/phpcs.xml",
             "/phpmd.xml",
             "/phpstan.neon",
-            "/phpcs.xml",
-            "/examples",
-            "/tests",
-            "/.gitattributes",
-            "/grumphp.yml"
+            "/phpunit.xml",
+            "/tests"
         ]
     },
     "config": {
