@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Johmanx10\Transaction\Operation;
@@ -8,10 +9,12 @@ use Johmanx10\Transaction\TransactionFactoryInterface;
 
 final class OperationHandler implements OperationHandlerInterface
 {
-    public function __construct(private TransactionFactoryInterface $factory) {}
+    public function __construct(private TransactionFactoryInterface $factory)
+    {
+    }
 
     public function __invoke(
-        OperationInterface|iterable ...$operations
+        OperationInterface | iterable ...$operations
     ): CommitResult {
         $transaction = $this->factory->__invoke(
             ...self::flatten(...$operations)
@@ -27,7 +30,7 @@ final class OperationHandler implements OperationHandlerInterface
     }
 
     private static function flatten(
-        OperationInterface|iterable ...$operations
+        OperationInterface | iterable ...$operations
     ): iterable {
         foreach ($operations as $children) {
             if (!is_iterable($children)) {
