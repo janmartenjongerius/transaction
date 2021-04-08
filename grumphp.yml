@@ -10,6 +10,12 @@ grumphp:
     composer:
       strict: true
 
+    make:
+      task: ci-task
+
+    phpversion:
+      project: '8.0'
+
     jsonlint:
       detect_key_conflicts: true
 
@@ -21,10 +27,11 @@ grumphp:
       triggered_by: [xml]
       ignore_patterns: []
 
-    phpcs:
-      standard: PSR12
-      triggered_by: [php]
-      whitelist_patterns: [/^src\/.+/]
+# Currently missing proper PHP 8 support
+#    phpcs:
+#      standard: PSR12
+#      triggered_by: [php]
+#      whitelist_patterns: [/^src\/.+/]
 
     phplint:
       jobs: ~
@@ -32,10 +39,11 @@ grumphp:
       ignore_patterns: [/^vendor\/.+/]
       triggered_by: [php]
 
-    phpmd:
-      ruleset: [cleancode, codesize, design, naming, unusedcode]
-      triggered_by: [php]
-      whitelist_patterns: [/^src\/.+/]
+# Currently missing proper PHP 8 support
+#    phpmd:
+#      ruleset: [cleancode, codesize, design, naming, unusedcode]
+#      triggered_by: [php]
+#      whitelist_patterns: [/^src\/.+/]
 
     phpstan:
       autoload_file: ~
@@ -47,7 +55,7 @@ grumphp:
       config_file: ./phpunit.xml
 
     phpparser:
-      ignore_patterns: [/^vendor\/.+/]
+      ignore_patterns: [/^vendor\/.+/, /^examples\/app\/.+/]
       triggered_by: [php]
       visitors:
         declare_strict_types: ~

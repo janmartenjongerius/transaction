@@ -12,3 +12,5 @@ clean-examples:
 	rm -rf $(EXAMPLES)
 
 clean:: clean-examples
+
+ci-task:: clean-examples examples

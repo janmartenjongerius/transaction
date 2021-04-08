@@ -20,6 +20,7 @@ final class Stage implements Stringable
 
     public function __invoke(): StageResult
     {
+        /** @var ?bool $result */
         $result = ($this->stage)();
 
         return new StageResult(

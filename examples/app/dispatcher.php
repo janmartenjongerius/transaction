@@ -127,6 +127,7 @@ return function (
                     count($event->rollbacks)
                 )
             );
+            exit(1);
         }
     );
 

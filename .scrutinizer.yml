@@ -11,12 +11,11 @@ build:
       tests:
         override:
           - php-scrutinizer-run
-          - command: phpcs-run
-          - command: 'vendor/bin/phpunit --coverage-clover=coverage.xml'
+          - command: vendor/bin/phpunit --coverage-clover=coverage.xml
             coverage:
-              file: 'coverage.xml'
-              format: 'clover'
-          - 'vendor/bin/grumphp run --no-interaction'
+              file: coverage.xml
+              format: clover
+          - make ci
 
     tests: true
 

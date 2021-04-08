@@ -15,5 +15,3 @@ $result = $handler(
         CopyFile::PRESERVE_EXISTING_FILE
     )
 );
-
-exit($result->committed() ? 0 : 1);
