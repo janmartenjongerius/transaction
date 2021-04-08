@@ -3,11 +3,14 @@ declare(strict_types=1);
 
 namespace Johmanx10\Transaction\Examples\Filesystem;
 
-use Johmanx10\Transaction\Operation\AbstractOperation;
+use Johmanx10\Transaction\Operation\Operable;
+use Johmanx10\Transaction\Operation\OperationInterface;
 use RuntimeException;
 
-final class CreateDirectory extends AbstractOperation
+final class CreateDirectory implements OperationInterface
 {
+    use Operable;
+
     public function __construct(private string $path, private int $mode) {}
 
     protected function stageOperation(): ?bool

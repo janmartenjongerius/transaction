@@ -4,12 +4,15 @@ declare(strict_types=1);
 namespace Johmanx10\Transaction\Examples\Filesystem;
 
 use DateTimeInterface;
-use Johmanx10\Transaction\Operation\AbstractOperation;
+use Johmanx10\Transaction\Operation\Operable;
+use Johmanx10\Transaction\Operation\OperationInterface;
 use Johmanx10\Transaction\Operation\Result\StageResult;
 use RuntimeException;
 
-final class Touch extends AbstractOperation
+final class Touch implements OperationInterface
 {
+    use Operable;
+
     private bool $existed;
     private ?int $previousTime = null;
 

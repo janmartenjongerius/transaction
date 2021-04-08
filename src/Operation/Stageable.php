@@ -4,26 +4,22 @@ declare(strict_types=1);
 
 namespace Johmanx10\Transaction\Operation;
 
-use Closure;
-use LogicException;
+use RuntimeException;
 
 trait Stageable
 {
-    private ?Closure $stage;
-
     /**
      * @return Stage
      *
-     * @throws LogicException When the trait is used by a class that does not
-     *   implement OperationInterface.
+     * @throws RuntimeException When the using class does not implement OperationInterface
      */
     public function stage(): Stage
     {
         if (!$this instanceof OperationInterface) {
-            throw new LogicException(
+            throw new RuntimeException(
                 sprintf(
-                    'Trait %s can only be used by instance of %s',
-                    __CLASS__,
+                    'Trait %s can only be implemented by implementer of %s',
+                    self::class,
                     OperationInterface::class
                 )
             );
@@ -31,7 +27,9 @@ trait Stageable
 
         return new Stage(
             $this,
-            $this->stage ?? fn () => true
+            fn () => $this->stageOperation()
         );
     }
+
+    abstract protected function stageOperation(): ?bool;
 }

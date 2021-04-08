@@ -3,14 +3,17 @@ declare(strict_types=1);
 
 namespace Johmanx10\Transaction\Examples\Filesystem;
 
-use Johmanx10\Transaction\Operation\AbstractOperation;
+use Johmanx10\Transaction\Operation\Operable;
+use Johmanx10\Transaction\Operation\OperationInterface;
 use Johmanx10\Transaction\Operation\Result\StageResult;
 use SplFileInfo;
 use SplFileObject;
 use SplTempFileObject;
 
-final class CopyFile extends AbstractOperation
+final class CopyFile implements OperationInterface
 {
+    use Operable;
+
     public const OVERRIDE_EXISTING_FILE = true;
     public const PRESERVE_EXISTING_FILE = false;
 
