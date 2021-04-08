@@ -8,7 +8,7 @@ use Psr\EventDispatcher\EventDispatcherInterface;
 
 trait DispatcherAware
 {
-    private ?EventDispatcherInterface $dispatcher;
+    private ?EventDispatcherInterface $dispatcher = null;
 
     public function setDispatcher(?EventDispatcherInterface $dispatcher): void
     {
