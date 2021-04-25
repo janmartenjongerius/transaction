@@ -16,7 +16,7 @@ $dispatcher->addListener(
 
 $transaction = new Transaction(
     new Operation(
-        'Prevented stage',
+        'Illegal stage',
         fn () => throw new RuntimeException('Should not run' . PHP_EOL),
         fn () => throw new RuntimeException('Should not roll back' . PHP_EOL),
         fn () => throw new RuntimeException('Should not stage' . PHP_EOL)

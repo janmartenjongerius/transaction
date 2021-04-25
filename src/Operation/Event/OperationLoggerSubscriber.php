@@ -19,11 +19,10 @@ class OperationLoggerSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            DefaultPreventableInterface::class => ['onPreventable', -1],
-            InvocationEvent::class => 'onInvoke',
+            InvocationEvent::class => [['onInvoke'], ['onPreventable', -1]],
             InvocationResultEvent::class => 'onAfterInvoke',
-            RollbackEvent::class => 'onRollback',
-            StageEvent::class => 'onStage',
+            RollbackEvent::class => [['onRollback'], ['onPreventable', -1]],
+            StageEvent::class => [['onStage'], ['onPreventable', -1]],
             StageResultEvent::class => 'onAfterStage'
         ];
     }
@@ -31,12 +30,16 @@ class OperationLoggerSubscriber implements EventSubscriberInterface
     public function onPreventable(DefaultPreventableInterface $event): void
     {
         if ($event->isDefaultPrevented()) {
+            $class = get_class($event);
             $this->logger->debug(
                 sprintf(
-                    'Prevented default for subject of: %s',
-                    $event instanceof Stringable
-                        ? $event
-                        : get_class($event)
+                    "[%s] Prevented: %s",
+                    match ($class) {
+                        InvocationEvent::class => 'invoke',
+                        StageEvent::class => 'stage',
+                        RollbackEvent::class => 'rollback'
+                    },
+                    $event instanceof Stringable ? $event : $class
                 )
             );
         }

@@ -1,3 +1,4 @@
 parameters:
-  excludes_analyse:
-#    - %rootDir%/../../../path/to/exclude/*
+  ignoreErrors:
+    - path: src/Operation/Event/OperationLoggerSubscriber.php
+      message: '#Match expression does not handle remaining value: .+Interface#'
