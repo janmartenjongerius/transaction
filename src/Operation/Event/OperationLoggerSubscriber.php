@@ -47,7 +47,7 @@ class OperationLoggerSubscriber implements EventSubscriberInterface
 
     public function onInvoke(InvocationEvent $event): void
     {
-        $this->logger->info("[invoke]\t{$event->invocation}");
+        $this->logger->info("[invoke] {$event->invocation}");
     }
 
     public function onAfterInvoke(InvocationResultEvent $event): void
@@ -61,41 +61,41 @@ class OperationLoggerSubscriber implements EventSubscriberInterface
         }
 
         if (!$result->invoked) {
-            $this->logger->debug("[invoke]\tSkipped: {$result}");
+            $this->logger->debug("[invoke] Skipped: {$result}");
             return;
         }
 
         if ($result->success) {
-            $this->logger->info("[invoke]\tSuccess: {$result}");
+            $this->logger->info("[invoke] Success: {$result}");
             return;
         }
 
-        $this->logger->error("[invoke]\tFailed: {$result}");
+        $this->logger->error("[invoke] Failed: {$result}");
     }
 
     public function onStage(StageEvent $event): void
     {
-        $this->logger->debug("[stage]\tStaging: {$event->stage}");
+        $this->logger->debug("[stage] Staging: {$event->stage}");
     }
 
     public function onAfterStage(StageResultEvent $event): void
     {
         if ($event->result->staged) {
-            $this->logger->info("[stage]\tStaged: {$event->result}");
+            $this->logger->info("[stage] Staged: {$event->result}");
             return;
         }
 
         if ($event->result->requiresInvoke) {
-            $this->logger->warning("[stage]\tNot staged: {$event->result}");
+            $this->logger->warning("[stage] Not staged: {$event->result}");
             return;
         }
 
-        $this->logger->debug("[stage]\tNot required: {$event->result}");
+        $this->logger->debug("[stage] Not required: {$event->result}");
     }
 
     public function onRollback(RollbackEvent $event): void
     {
-        $this->logger->warning("[rollback]\tRolling back: {$event->rollback}");
+        $this->logger->warning("[rollback] Rolling back: {$event->rollback}");
 
         if ($event->reason !== null) {
             $this->logger->debug($event->reason->getMessage());
