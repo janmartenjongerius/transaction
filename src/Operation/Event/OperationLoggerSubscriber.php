@@ -19,15 +19,15 @@ class OperationLoggerSubscriber implements EventSubscriberInterface
     public static function getSubscribedEvents(): array
     {
         return [
-            InvocationEvent::class => [['onInvoke'], ['onPreventable', -1]],
+            InvocationEvent::class => [['onInvoke'], ['onAfterPrevent', -1]],
             InvocationResultEvent::class => 'onAfterInvoke',
-            RollbackEvent::class => [['onRollback'], ['onPreventable', -1]],
-            StageEvent::class => [['onStage'], ['onPreventable', -1]],
+            RollbackEvent::class => [['onRollback'], ['onAfterPrevent', -1]],
+            StageEvent::class => [['onStage'], ['onAfterPrevent', -1]],
             StageResultEvent::class => 'onAfterStage'
         ];
     }
 
-    public function onPreventable(DefaultPreventableInterface $event): void
+    public function onAfterPrevent(DefaultPreventableInterface $event): void
     {
         if ($event->isDefaultPrevented()) {
             $class = get_class($event);
