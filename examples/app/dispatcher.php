@@ -2,6 +2,7 @@
 declare(strict_types=1);
 
 use Johmanx10\Transaction\Event\CommitResultEvent;
+use Johmanx10\Transaction\Event\RollbackBlockedEvent;
 use Johmanx10\Transaction\Event\RollbackResultEvent;
 use Johmanx10\Transaction\Event\StagingResultEvent;
 use Johmanx10\Transaction\Operation\Event\InvocationEvent;
@@ -128,6 +129,23 @@ return function (
                 )
             );
             exit(1);
+        }
+    );
+
+    $dispatcher->addListener(
+        RollbackBlockedEvent::class,
+        function (RollbackBlockedEvent $event) use ($io): void {
+            $messages = ['Rollback was not allowed to proceed.'];
+
+            if ($event->committed) {
+                $messages[] = '* The transaction committed successfully.';
+            }
+
+            if ($event->rolledBack) {
+                $messages[] = '* The transaction rolled back or attempted as much before.';
+            }
+
+            $io->warning($messages);
         }
     );
 
