@@ -13,7 +13,6 @@ use Johmanx10\Transaction\Operation\Event\StageResultEvent;
 use Johmanx10\Transaction\Operation\Invocation;
 use Johmanx10\Transaction\Operation\OperationInterface;
 use Johmanx10\Transaction\Operation\Result\InvocationResult;
-use Johmanx10\Transaction\Operation\Result\StageResult;
 use Johmanx10\Transaction\Result\CommitResult;
 use Johmanx10\Transaction\Result\StagingResult;
 
@@ -27,19 +26,26 @@ trait Committable
     private function stage(OperationInterface ...$operations): StagingResult
     {
         $result = new StagingResult(
-            ...array_map(
-                function (OperationInterface $operation): StageResult {
+            ...array_reduce(
+                $operations,
+                function (
+                    array $carry,
+                    OperationInterface $operation
+                ): array {
                     $stage = $operation->stage();
+                    $event = new StageEvent($stage);
 
-                    $this->dispatch(new StageEvent($stage));
+                    $this->dispatch($event);
 
-                    $result = $stage();
+                    if (!$event->isDefaultPrevented()) {
+                        $result = $stage();
+                        $this->dispatch(new StageResultEvent($result));
+                        $carry[] = $result;
+                    }
 
-                    $this->dispatch(new StageResultEvent($result));
-
-                    return $result;
+                    return $carry;
                 },
-                $operations
+                []
             )
         );
 
@@ -56,8 +62,13 @@ trait Committable
 
         foreach ($staging->getRequiredOperations() as $operation) {
             $invocation = $operation();
+            $event = new InvocationEvent($invocation);
 
-            $this->dispatch(new InvocationEvent($invocation));
+            $this->dispatch($event);
+
+            if ($event->isDefaultPrevented()) {
+                continue;
+            }
 
             $result = $skip
                 ? new InvocationResult(

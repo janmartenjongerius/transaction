@@ -4,6 +4,7 @@ declare(strict_types=1);
 namespace Johmanx10\Transaction\Result;
 
 use Johmanx10\Transaction\DispatcherAware;
+use Johmanx10\Transaction\Event\RollbackBlockedEvent;
 use Johmanx10\Transaction\Event\RollbackResultEvent;
 use Johmanx10\Transaction\Operation\Event\RollbackEvent;
 use Johmanx10\Transaction\Operation\Result\InvocationResult;
@@ -15,6 +16,7 @@ final class CommitResult
 
     private array $results;
     private bool $rolledBack = false;
+    private bool $committed;
 
     public function __construct(
         public StagingResult $staging,
@@ -30,7 +32,7 @@ final class CommitResult
      */
     public function committed(): bool
     {
-        return array_reduce(
+        return $this->committed ??= array_reduce(
             $this->results,
             fn (bool $carry, InvocationResult $result) =>
                 $carry && $result->success,
@@ -58,7 +60,14 @@ final class CommitResult
      */
     public function rollback(): void
     {
-        if ($this->rolledBack) {
+        if ($this->rolledBack || $this->committed()) {
+            $this->dispatch(
+                new RollbackBlockedEvent(
+                    rolledBack: $this->rolledBack,
+                    committed: $this->committed()
+                )
+            );
+            $this->rolledBack = true;
             return;
         }
 
@@ -71,10 +80,13 @@ final class CommitResult
             }
 
             $rollback = $result->rollback();
+            $event = new RollbackEvent($rollback, $result->exception);
 
-            $this->dispatch(
-                new RollbackEvent($rollback, $result->exception)
-            );
+            $this->dispatch($event);
+
+            if ($event->isDefaultPrevented()) {
+                continue;
+            }
 
             $rollback();
 

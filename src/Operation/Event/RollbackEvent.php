@@ -4,11 +4,15 @@ declare(strict_types=1);
 
 namespace Johmanx10\Transaction\Operation\Event;
 
+use Johmanx10\Transaction\Event\DefaultPreventable;
+use Johmanx10\Transaction\Event\DefaultPreventableInterface;
 use Johmanx10\Transaction\Operation\Rollback;
 use Throwable;
 
-final class RollbackEvent
+final class RollbackEvent implements DefaultPreventableInterface
 {
+    use DefaultPreventable;
+
     public function __construct(
         public Rollback $rollback,
         public ?Throwable $reason

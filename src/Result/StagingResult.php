@@ -10,6 +10,7 @@ use Johmanx10\Transaction\Operation\Result\StageResult;
 final class StagingResult
 {
     private array $results;
+    private bool $staged;
 
     public function __construct(StageResult ...$results)
     {
@@ -23,7 +24,7 @@ final class StagingResult
      */
     public function isStaged(): bool
     {
-        return array_reduce(
+        return $this->staged ??= array_reduce(
             $this->results,
             fn (bool $carry, StageResult $result) =>
                 $carry && ($result->staged || !$result->requiresInvoke),
