@@ -4,11 +4,14 @@ declare(strict_types=1);
 
 namespace Johmanx10\Transaction\Operation;
 
+use Closure;
 use Johmanx10\Transaction\Result\CommitResult;
 use Johmanx10\Transaction\TransactionFactoryInterface;
 
 final class OperationHandler implements OperationHandlerInterface
 {
+    private ?Closure $rollback = null;
+
     public function __construct(private TransactionFactoryInterface $factory)
     {
     }
@@ -20,7 +23,7 @@ final class OperationHandler implements OperationHandlerInterface
             ...self::flatten(...$operations)
         );
 
-        $result = $transaction->commit();
+        $result = $transaction->commit($this->rollback);
 
         if (!$result->committed()) {
             $result->rollback();
@@ -42,5 +45,12 @@ final class OperationHandler implements OperationHandlerInterface
                 yield $operation;
             }
         }
+    }
+
+    public function withRollback(callable $rollback): static
+    {
+        $handler = clone $this;
+        $handler->rollback = fn () => $rollback();
+        return $handler;
     }
 }

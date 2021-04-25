@@ -54,7 +54,7 @@ trait Committable
         return $result;
     }
 
-    public function commit(): CommitResult
+    public function commit(callable $rollback = null): CommitResult
     {
         $results = [];
         $staging = $this->stage(...$this->operations);
@@ -87,7 +87,11 @@ trait Committable
             $results[] = $result;
         }
 
-        $result = new CommitResult($staging, ...$results);
+        $result = new CommitResult(
+            $staging,
+            $rollback ? fn () => $rollback() : null,
+            ...$results
+        );
         $result->setDispatcher($this->dispatcher);
 
         $this->dispatch(new CommitResultEvent($result));

@@ -11,4 +11,6 @@ interface OperationHandlerInterface
     public function __invoke(
         OperationInterface | iterable ...$operations
     ): CommitResult;
+
+    public function withRollback(callable $rollback): static;
 }

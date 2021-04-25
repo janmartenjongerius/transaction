@@ -128,7 +128,11 @@ return function (
                     count($event->rollbacks)
                 )
             );
-            exit(1);
+            exit(
+                defined('EXIT_ON_ERROR')
+                    ? EXIT_ON_ERROR
+                    : 1
+            );
         }
     );
 

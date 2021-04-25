@@ -8,5 +8,5 @@ use Johmanx10\Transaction\Result\CommitResult;
 
 interface TransactionInterface
 {
-    public function commit(): CommitResult;
+    public function commit(callable $rollback = null): CommitResult;
 }
