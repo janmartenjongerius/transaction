@@ -7,11 +7,11 @@ use Johmanx10\Transaction\Operation\OperationHandlerInterface;
 
 /** @var OperationHandlerInterface $handler */
 $handler = require __DIR__ . '/app/handler.php';
-$destination = __FILE__ . '.d/index.php';
-$result = $handler(
+$destination = __FILE__ . '.out/index.php';
+$handler(
     CopyFile::fromPath(
         __FILE__,
         $destination,
-        CopyFile::PRESERVE_EXISTING_FILE
+        overrideExisting: CopyFile::OVERRIDE_EXISTING_FILE
     )
 );

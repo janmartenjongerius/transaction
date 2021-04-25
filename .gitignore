@@ -2,7 +2,7 @@
 composer.lock
 
 # Local example output.
-/examples/*.d/
+/examples/*.php.out
 
 # Code coverage output
 /coverage

@@ -1,11 +1,11 @@
 SRC := $(shell find src -name '*.php')
 
 EXAMPLES_SRC := $(wildcard examples/*.php)
-EXAMPLES := $(patsubst %.php,%.php.d,$(EXAMPLES_SRC))
+EXAMPLES := $(patsubst %.php,%.php.out,$(EXAMPLES_SRC))
 
 examples: $(EXAMPLES)
 
-examples/%.d: $(EXAMPLES_SRC) $(SRC) | $(COMPOSER_AUTOLOAD) $(PHP)
+examples/%.out: $(EXAMPLES_SRC) $(SRC) | $(COMPOSER_AUTOLOAD) $(PHP)
 	$(PHP) examples/$* && touch $@
 
 clean-examples:
