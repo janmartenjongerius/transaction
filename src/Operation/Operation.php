@@ -13,8 +13,8 @@ final class Operation implements OperationInterface
     public function __construct(
         private Stringable|string $description,
         private Closure $invocation,
-        private ?Closure $rollback,
-        private ?Closure $stage
+        private ?Closure $rollback = null,
+        private ?Closure $stage = null
     ) {}
 
     public function __invoke(): Invocation
