@@ -19,7 +19,8 @@
     "require": {
         "php": "^8.0",
         "ext-SPL": "@stable",
-        "psr/event-dispatcher": "^1.0"
+        "psr/event-dispatcher": "^1.0",
+        "psr/log": "^1.0"
     },
     "require-dev": {
         "ext-xdebug": "@stable",
@@ -29,6 +30,9 @@
         "php-parallel-lint/php-parallel-lint": "@stable",
         "symfony/console": "@stable",
         "symfony/event-dispatcher": "@stable"
+    },
+    "suggest": {
+        "symfony/event-dispatcher": "To apply the logging event subscriber implementation."
     },
     "autoload": {
         "psr-4": {
