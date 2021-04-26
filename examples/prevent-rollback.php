@@ -20,7 +20,7 @@ $log = fopen($outFile, 'wb+');
 $transaction = new Transaction(
     new Operation(
         'Illegal rollback',
-        fn () => fwrite($log, 'Should run' . PHP_EOL) > 0,
+        fn () => fwrite($log, 'Should run' . PHP_EOL) < 0,
         fn () => throw new RuntimeException('Should not roll back' . PHP_EOL),
         fn () => fwrite($log, 'Should stage' . PHP_EOL) > 0
     )
