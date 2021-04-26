@@ -8,15 +8,7 @@ use Johmanx10\Transaction\Operation\Operation;
 use Johmanx10\Transaction\Transaction;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-//$dispatcher = new EventDispatcher();
-/** @var EventDispatcher $dispatcher */
-$dispatcher = (require __DIR__ . '/app/dispatcher.php')(
-    new \Symfony\Component\Console\Logger\ConsoleLogger(
-        new \Symfony\Component\Console\Output\ConsoleOutput(
-            \Symfony\Component\Console\Output\ConsoleOutput::VERBOSITY_DEBUG
-        )
-    )
-);
+$dispatcher = new EventDispatcher();
 $dispatcher->addListener(
     InvocationEvent::class,
     fn (InvocationEvent $event) => $event->preventDefault()
