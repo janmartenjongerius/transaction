@@ -49,7 +49,7 @@ final class Touch implements OperationInterface
     {
         if (!$this->existed) {
             if (is_dir($this->path)) {
-                if (!rmdir($this->path)) {
+                if (!@rmdir($this->path)) {
                     throw new RuntimeException(
                         sprintf(
                             'Cannot remove directory "%s"',
@@ -61,7 +61,7 @@ final class Touch implements OperationInterface
                 return;
             }
 
-            if (!unlink($this->path)) {
+            if (!@unlink($this->path)) {
                 throw new RuntimeException(
                     sprintf(
                         'Cannot remove file "%s"',

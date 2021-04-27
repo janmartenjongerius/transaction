@@ -67,6 +67,12 @@ final class CopyFile implements OperationInterface
 
     protected function run(): ?bool
     {
+        if ($this->overrideExisting === false
+            && $this->destination->getRealPath() !== false
+        ) {
+            return false;
+        }
+
         if ($this->destination->getSize() > 0) {
             $this->buffer = new SplTempFileObject();
 

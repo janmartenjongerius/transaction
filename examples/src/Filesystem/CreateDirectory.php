@@ -11,6 +11,8 @@ final class CreateDirectory implements OperationInterface
 {
     use Operable;
 
+    private bool $existed;
+
     public function __construct(private string $path, private int $mode) {}
 
     protected function stageOperation(): ?bool
@@ -20,7 +22,7 @@ final class CreateDirectory implements OperationInterface
 
     protected function run(): ?bool
     {
-        if (is_dir($this->path)) {
+        if ($this->existed = is_dir($this->path)) {
             return @chmod($this->path, $this->mode);
         }
 
@@ -29,7 +31,7 @@ final class CreateDirectory implements OperationInterface
 
     protected function rollback(): void
     {
-        if (is_file($this->path) && !rmdir($this->path)) {
+        if (!$this->existed && is_dir($this->path) && !@rmdir($this->path)) {
             throw new RuntimeException(
                 sprintf(
                     'Cannot remove directory "%s".',
