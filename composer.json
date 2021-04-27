@@ -49,7 +49,6 @@
         "exclude": [
             "/.gitattributes",
             "/.gitignore",
-            "/.scrutinizer.yml",
             "/docs",
             "/examples",
             "/grumphp.yml",
