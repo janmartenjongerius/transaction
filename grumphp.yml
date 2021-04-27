@@ -6,6 +6,18 @@ grumphp:
   parallel:
     enabled: false
 
+  testsuites:
+    ci:
+      tasks:
+        - composer
+        - make
+        - phpversion
+        - jsonlint
+        - xmllint
+        - phplint
+        - phpstan
+        - phpparser
+
   tasks:
     composer:
       strict: true

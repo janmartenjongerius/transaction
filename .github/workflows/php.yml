@@ -20,4 +20,13 @@ jobs:
         run: composer update
 
       - name: GrumPHP
-        run: vendor/bin/grumphp run
+        run: vendor/bin/grumphp run --testsuite=ci
+
+      - name: Code coverage
+        run: |
+          vendor/bin/phpunit --coverage-text=coverage.txt
+          cat coverage.txt
+          grep 'Classes: ' coverage/coverage.txt \
+            | head -n 1 \
+            | awk '{print $2}' \
+            | grep '100.00%'
