@@ -65,7 +65,7 @@ trait Operation
         return new Invocation(
             $description,
             fn () => $willRun,
-            fn () => $willRollback || throw new RuntimeException('Cannot roll back.')
+            fn () => $willRollback or throw new RuntimeException('Cannot roll back.')
         );
     }
 }
