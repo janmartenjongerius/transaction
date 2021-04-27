@@ -1,0 +1,23 @@
+name: PHP
+
+on:
+  push:
+    branches: [master, '2.*']
+  pull_request:
+    branches: [master, '2.*']
+
+jobs:
+  php:
+    name: GrumPHP
+    runs-on: ubuntu-20.04
+    container: srcoder/development-php:php80-fpm
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Install Composer package
+        run: composer update
+
+      - name: GrumPHP
+        run: vendor/bin/grumphp run

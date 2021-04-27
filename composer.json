@@ -48,6 +48,7 @@
     "archive": {
         "exclude": [
             "/.gitattributes",
+            "/.github",
             "/.gitignore",
             "/docs",
             "/examples",
