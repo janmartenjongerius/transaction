@@ -18,21 +18,36 @@ $inputDefinition->addOption(
         'Whether to dry-run the operations'
     )
 );
-
+$inputDefinition->addOption(
+    new InputOption(
+        '--quiet',
+        '-q',
+        InputOption::VALUE_NONE,
+        'Do not output any message'
+    )
+);
 $inputDefinition->addOption(
     new InputOption(
         'verbose',
-        'v',
+        'v|vv|vvv',
         InputOption::VALUE_NONE,
-        'Verbosity level'
+        'Increase the verbosity of messages: 1 for normal output, 2 for more verbose output and 3 for debug'
     )
 );
 
-$input = new ArgvInput(null, $inputDefinition);
+$input = new ArgvInput($argv, $inputDefinition);
 $output = new ConsoleOutput(
-    $input->getOption('verbose')
-        ? ConsoleOutput::VERBOSITY_DEBUG
-        : ConsoleOutput::VERBOSITY_NORMAL
+    array_reduce(
+        $argv,
+        fn (int $verbosity, string $flag) => match ($flag) {
+            '-v'                => ConsoleOutput::VERBOSITY_VERBOSE,
+            '-vv'               => ConsoleOutput::VERBOSITY_VERY_VERBOSE,
+            '-vvv', '--verbose' => ConsoleOutput::VERBOSITY_DEBUG,
+            '-q',   '--quiet'   => ConsoleOutput::VERBOSITY_QUIET,
+            default             => $verbosity
+        },
+        ConsoleOutput::VERBOSITY_NORMAL
+    )
 );
 
 return [$input, $output];
