@@ -81,10 +81,9 @@ final class CommitResult
                 continue;
             }
 
-            $rollback = $result->rollback();
-            $event = new RollbackEvent($rollback, $result->exception);
-
+            $event = new RollbackEvent($result->rollback(), $result->exception);
             $this->dispatch($event);
+            $rollback = $event->rollback;
 
             if ($event->isDefaultPrevented()) {
                 continue;

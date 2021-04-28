@@ -32,10 +32,9 @@ trait Committable
                     array $carry,
                     OperationInterface $operation
                 ): array {
-                    $stage = $operation->stage();
-                    $event = new StageEvent($stage);
-
+                    $event = new StageEvent($operation->stage());
                     $this->dispatch($event);
+                    $stage = $event->stage;
 
                     if (!$event->isDefaultPrevented()) {
                         $result = $stage();
@@ -61,10 +60,9 @@ trait Committable
         $skip = !$staging->isStaged();
 
         foreach ($staging->getRequiredOperations() as $operation) {
-            $invocation = $operation();
-            $event = new InvocationEvent($invocation);
-
+            $event = new InvocationEvent($operation());
             $this->dispatch($event);
+            $invocation = $event->invocation;
 
             if ($event->isDefaultPrevented()) {
                 continue;

@@ -12,7 +12,7 @@ final class Stage implements Stringable
     use Describable;
 
     public function __construct(
-        private OperationInterface $operation,
+        public OperationInterface $operation,
         private Closure $stage
     ) {
         $this->description = $operation;
