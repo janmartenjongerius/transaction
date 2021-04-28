@@ -126,7 +126,7 @@ examples/operation-handler
 
 To create an operation, implement the `OperationInterface`,
 `DescribableOperationInterface` or use the existing `Operation` class to create
-and inline operation:
+an inline operation:
 
 ```php
 <?php
