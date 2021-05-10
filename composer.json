@@ -42,7 +42,7 @@
     "autoload-dev": {
         "psr-4": {
             "Johmanx10\\Transaction\\Tests\\": "tests",
-            "Johmanx10\\Transaction\\Examples\\": "examples/src"
+            "Acme\\Filesystem\\Operation\\": "examples/src"
         }
     },
     "archive": {

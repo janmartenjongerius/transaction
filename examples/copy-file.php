@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-use Johmanx10\Transaction\Examples\Filesystem\CopyFile;
+use Acme\Filesystem\Operation\CopyFile;
 use Johmanx10\Transaction\Operation\OperationHandlerInterface;
 
 /** @var OperationHandlerInterface $handler */

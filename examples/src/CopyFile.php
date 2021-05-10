@@ -1,7 +1,7 @@
 <?php
 declare(strict_types=1);
 
-namespace Johmanx10\Transaction\Examples\Filesystem;
+namespace Acme\Filesystem\Operation;
 
 use Johmanx10\Transaction\Operation\Operable;
 use Johmanx10\Transaction\Operation\OperationInterface;
