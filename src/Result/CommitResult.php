@@ -3,7 +3,6 @@ declare(strict_types=1);
 
 namespace Johmanx10\Transaction\Result;
 
-use Closure;
 use Johmanx10\Transaction\DispatcherAware;
 use Johmanx10\Transaction\Event\RollbackBlockedEvent;
 use Johmanx10\Transaction\Event\RollbackResultEvent;
@@ -21,7 +20,6 @@ final class CommitResult
 
     public function __construct(
         public StagingResult $staging,
-        private ?Closure $rollback,
         InvocationResult ...$results
     ) {
         $this->results = $results;
@@ -59,8 +57,10 @@ final class CommitResult
 
     /**
      * Roll back the operations that weren't skipped.
+     *
+     * @param callable|null $rollback
      */
-    public function rollback(): void
+    public function rollback(callable $rollback = null): void
     {
         if ($this->rolledBack || $this->committed()) {
             $this->dispatch(
@@ -76,7 +76,7 @@ final class CommitResult
         $this->rolledBack = true;
         $rollbacks = [];
 
-        foreach ($this->getResults() as $result) {
+        foreach ($this->getResults($rollback) as $result) {
             if (!$result->invoked) {
                 continue;
             }
@@ -98,17 +98,19 @@ final class CommitResult
     }
 
     /**
+     * @param callable|null $rollback
+     *
      * @return InvocationResult[]
      */
-    private function getResults(): iterable
+    private function getResults(?callable $rollback): iterable
     {
-        if ($this->rollback !== null) {
+        if ($rollback !== null) {
             yield new InvocationResult(
                 'Transaction',
                 $this->committed(),
                 true,
                 $this->getReason(),
-                $this->rollback
+                $rollback
             );
             return;
         }

@@ -13,4 +13,6 @@ interface OperationHandlerInterface
     ): CommitResult;
 
     public function withRollback(callable $rollback): static;
+
+    public function defaultRollback(): static;
 }

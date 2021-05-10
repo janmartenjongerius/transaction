@@ -23,10 +23,10 @@ final class OperationHandler implements OperationHandlerInterface
             ...self::flatten(...$operations)
         );
 
-        $result = $transaction->commit($this->rollback);
+        $result = $transaction->commit();
 
         if (!$result->committed()) {
-            $result->rollback();
+            $result->rollback($this->rollback);
         }
 
         return $result;
@@ -51,6 +51,13 @@ final class OperationHandler implements OperationHandlerInterface
     {
         $handler = clone $this;
         $handler->rollback = fn () => $rollback();
+        return $handler;
+    }
+
+    public function defaultRollback(): static
+    {
+        $handler = clone $this;
+        $handler->rollback = null;
         return $handler;
     }
 }
