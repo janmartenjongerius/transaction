@@ -1,3 +1,8 @@
+![Packagist Version](https://img.shields.io/packagist/v/johmanx10/transaction?label=@stable)
+![PHP from Packagist](https://img.shields.io/packagist/php-v/johmanx10/transaction.svg)
+![Packagist](https://img.shields.io/packagist/dt/johmanx10/transaction.png)
+![Build status](https://github.com/johmanx10/transaction/actions/workflows/php.yml/badge.svg)
+
 # Introduction
 
 The library `johmanx10/transaction` allows splitting up scripted operations into
@@ -19,14 +24,33 @@ composer require johmanx10/transaction
 
 # Features
 
-- Perform operations in a transaction
-- Stage operations
-- Rollback transaction / operations
-- Dry-run transactions
-- Granular control over transaction behavior
+- Perform [operations](docs/operation.md):
+   - in a [transaction](docs/transaction.md)
+   - using an [operation handler](docs/operation-handler.md)
+- [Dry-run transactions](docs/transaction.md#dry-runs)
+- [Stage operations](docs/operation.md#staging)
+- Rollback [transaction](docs/transaction.md#rollbacks) / [operations](docs/operation.md#rolling-back)
+- Granular control of behavior
    - Compatible with [PSR-14 event dispatcher](https://www.php-fig.org/psr/psr-14/)
+   - [Transaction events](docs/events.md#transaction-events)
+   - [Operation events](docs/events.md#operation-events)
+- Readily available [logging subscribers](docs/events.md#logging-subscribers)
+   - Transaction logging subscriber
+   - Operation logging subscriber
+   - [PSR-3 logger](https://www.php-fig.org/psr/psr-3/) compatible
 
-> **!! Needs links to feature documentation !!**
+# Examples
+
+- [Blocked double rollback](examples/blocked-rollback.php)
+- [Copy a file](examples/copy-file.php)
+- [Custom rollback](examples/custom-rollback.php)
+- [Intercept invoke](examples/intercept-invoke.php)
+- [Intercept rollback](examples/intercept-rollback.php)
+- [Intercept stage](examples/intercept-stage.php)
+- [Logging subscriber](examples/logging-subscriber.php)
+- [Prevent invoke](examples/prevent-invoke.php)
+- [Prevent rollback](examples/prevent-rollback.php)
+- [Prevent stage](examples/prevent-stage.php)
 
 # Changes since version 1
 
@@ -41,43 +65,36 @@ have made for significant changes between the major versions.
 > 
 > A focus will be made to use PHP 8 features in the new major version.
 
-> **!! Needs link to upgrade guides !!**
+See: [Upgrading from 1.2.x to 2.0.x](docs/upgrade/upgrade-20.md)
 
-# Badges of honor
+> **N.B.:** This version has feature parity with the previous major version,
+> however, features may be implemented differently, causing backward
+> incompatibility.
 
-<table>
-  <tbody>
-    <tr>
-      <th>Versions</th>
-      <td>
+# Supporting version 1.2
 
-[![Packagist](https://img.shields.io/packagist/v/johmanx10/transaction.png)](https://packagist.org/packages/johmanx10/transaction)
-![PHP from Packagist](https://img.shields.io/packagist/php-v/johmanx10/transaction.svg)
-      </td>
-    </tr>
-    <tr>
-      <th>Usage</th>
-      <td>
+For version 1.2, a support branch is kept open. This version will be supported
+as long as a
+[PHP 7 version is supported](https://www.php.net/supported-versions.php).
 
-[![Packagist](https://img.shields.io/packagist/dt/johmanx10/transaction.png)](https://packagist.org/packages/johmanx10/transaction/stats)
-[![Packagist](https://img.shields.io/packagist/dm/johmanx10/transaction.png)](https://packagist.org/packages/johmanx10/transaction/stats)
-      </td>
-    </tr>
-    <tr>
-      <th>Quality</th>
-      <td>
+This does not include extended support by other vendors! However, if for some
+reason the support schedule of PHP changes, this library will follow.
 
-[![Build Status](https://scrutinizer-ci.com/g/johmanx10/transaction/badges/build.png?b=master)](https://scrutinizer-ci.com/g/johmanx10/transaction/build-status/master)
-[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/johmanx10/transaction/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/johmanx10/transaction/?branch=master)        
-[![Code Coverage](https://scrutinizer-ci.com/g/johmanx10/transaction/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/johmanx10/transaction/?branch=master)
-      </td>
-    </tr>
-    <tr>
-      <th>Legal</th>
-      <td>
+## Active support
 
-[![Packagist](https://img.shields.io/packagist/l/johmanx10/transaction.svg)](LICENSE)
-      </td>
-    </tr>
-  </tbody>
-</table>
+A release that is being actively supported.
+
+- Reported bugs are fixed.
+- Reported security issues are fixed.
+- Releases are only made on an as-needed basis.
+
+Active support ends when the active support of PHP 7.4 ends.
+
+## Security support
+
+A release that is supported for critical security issues only.
+
+- Reported security issues are fixed.
+- Releases are only made on an as-needed basis.
+
+Security support ends when the security support of PHP 7.4 ends.
