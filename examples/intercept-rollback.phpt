@@ -1,3 +1,10 @@
+--TEST--
+Rollbacks can be intercepted.
+--EXPECT--
+Should stage
+Should fail invocation
+Intercept successful
+--FILE--
 <?php
 declare(strict_types=1);
 
@@ -9,29 +16,24 @@ use Johmanx10\Transaction\Operation\Rollback;
 use Johmanx10\Transaction\Transaction;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
-$outFile = __FILE__ . '.out';
-$log = fopen($outFile, 'wb+');
-
 $dispatcher = new EventDispatcher();
 $dispatcher->addListener(
     RollbackEvent::class,
     fn (RollbackEvent $event) => $event->rollback = new Rollback(
-        'Intercepted invocation',
-        fn () => fwrite($log, 'Intercept successful' . PHP_EOL)
+        'Intercepted rollback',
+        fn () => (print 'Intercept successful' . PHP_EOL) > 0
     )
 );
 
 $transaction = new Transaction(
     new Operation(
         'Intercept rollback',
-        fn () => fwrite($log,  'Should fail invocation' . PHP_EOL) < 0,
-        fn () => throw new RuntimeException( 'Should be intercepted' . PHP_EOL),
-        fn () => fwrite($log, 'Should stage' . PHP_EOL) > 0
+        fn () => (print  'Should fail invocation' . PHP_EOL) < 0,
+        fn () => throw new RuntimeException( 'Should be intercepted'),
+        fn () => (print 'Should stage' . PHP_EOL) > 0
     )
 );
 $transaction->setDispatcher($dispatcher);
 $transaction
     ->commit()
     ->rollback();
-
-readfile($outFile);

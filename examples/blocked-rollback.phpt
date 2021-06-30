@@ -1,3 +1,9 @@
+--TEST--
+Rollbacks should be blocked on successful commits and repeated calls.
+--EXPECT--
+[BLOCK] > [rolled back: N] [committed: Y]
+[BLOCK] > [rolled back: Y] [committed: Y]
+--FILE--
 <?php
 declare(strict_types=1);
 
@@ -7,20 +13,14 @@ use Symfony\Component\EventDispatcher\EventDispatcher;
 
 require_once __DIR__ . '/../vendor/autoload.php';
 
-$outFile = __FILE__ . '.out';
-$log     = fopen($outFile, 'wb+');
-
 $dispatcher = new EventDispatcher();
 $dispatcher->addListener(
     RollbackBlockedEvent::class,
-    fn(RollbackBlockedEvent $event) => fwrite(
-        $log,
-        sprintf(
-            '[BLOCK] > [rolled back: %s] [committed: %s]',
-            $event->rolledBack ? 'Y' : 'N',
-            $event->committed ? 'Y' : 'N'
-        ) . PHP_EOL
-    )
+    fn(RollbackBlockedEvent $event) => print sprintf(
+        '[BLOCK] > [rolled back: %s] [committed: %s]',
+        $event->rolledBack ? 'Y' : 'N',
+        $event->committed ? 'Y' : 'N'
+    ) . PHP_EOL
 );
 
 $transaction = new Transaction();
@@ -29,5 +29,3 @@ $result = $transaction->commit();
 
 $result->rollback();
 $result->rollback();
-
-readfile($outFile);

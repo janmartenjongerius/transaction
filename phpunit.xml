@@ -4,8 +4,11 @@
         cacheResult="false"
         bootstrap="vendor/autoload.php">
     <testsuites>
-        <testsuite name="default">
+        <testsuite name="unit">
             <directory>tests</directory>
+        </testsuite>
+        <testsuite name="integration">
+            <directory suffix=".phpt">examples</directory>
         </testsuite>
     </testsuites>
     <coverage processUncoveredFiles="true">

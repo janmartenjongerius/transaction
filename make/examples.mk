@@ -1,16 +1,6 @@
 SRC := $(shell find src -name '*.php')
+EXAMPLES := $(shell find examples -name '*.phpt')
 
-EXAMPLES_SRC := $(wildcard examples/*.php)
-EXAMPLES := $(patsubst %.php,%.php.out,$(EXAMPLES_SRC))
-
-examples: $(EXAMPLES)
-
-examples/%.out: $(EXAMPLES_SRC) $(SRC) | $(COMPOSER_AUTOLOAD) $(PHP)
-	$(PHP) examples/$* && touch $@
-
-clean-examples:
-	rm -rf $(EXAMPLES)
-
-clean:: clean-examples
-
-ci-task:: clean-examples examples
+.PHONY: examples
+examples: $(EXAMPLES) $(SRC) vendor
+	$(PHP) vendor/bin/phpunit --testsuite=integration

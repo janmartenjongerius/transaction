@@ -10,7 +10,6 @@ grumphp:
     ci:
       tasks:
         - composer
-        - make
         - phpversion
         - jsonlint
         - xmllint
@@ -21,9 +20,6 @@ grumphp:
   tasks:
     composer:
       strict: true
-
-    make:
-      task: ci-task
 
     phpversion:
       project: '8.0'

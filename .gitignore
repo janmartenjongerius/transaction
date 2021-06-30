@@ -1,8 +1,5 @@
 /vendor/
 composer.lock
 
-# Local example output.
-/examples/*.php.out
-
 # Code coverage output
 /coverage

@@ -1,3 +1,8 @@
+--TEST--
+Prevent stage.
+--EXPECT--
+bool(true)
+--FILE--
 <?php
 declare(strict_types=1);
 
@@ -17,10 +22,12 @@ $dispatcher->addListener(
 $transaction = new Transaction(
     new Operation(
         'Illegal stage',
-        fn () => throw new RuntimeException('Should not run' . PHP_EOL),
-        fn () => throw new RuntimeException('Should not roll back' . PHP_EOL),
-        fn () => throw new RuntimeException('Should not stage' . PHP_EOL)
+        fn () => throw new RuntimeException('Should not run'),
+        fn () => throw new RuntimeException('Should not roll back'),
+        fn () => throw new RuntimeException('Should not stage')
     )
 );
 $transaction->setDispatcher($dispatcher);
-$transaction->commit();
+$result = $transaction->commit();
+
+var_dump($result->committed());

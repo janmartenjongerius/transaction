@@ -1,3 +1,9 @@
+--TEST--
+Prevent rollback.
+--EXPECT--
+Should stage
+Should fail run
+--FILE--
 <?php
 declare(strict_types=1);
 
@@ -14,18 +20,13 @@ $dispatcher->addListener(
     fn (RollbackEvent $event) => $event->preventDefault()
 );
 
-$outFile = __FILE__ . '.out';
-$log = fopen($outFile, 'wb+');
-
 $transaction = new Transaction(
     new Operation(
         'Illegal rollback',
-        fn () => fwrite($log, 'Should run' . PHP_EOL) < 0,
-        fn () => throw new RuntimeException('Should not roll back' . PHP_EOL),
-        fn () => fwrite($log, 'Should stage' . PHP_EOL) > 0
+        fn () => (print 'Should fail run' . PHP_EOL) < 0,
+        fn () => throw new RuntimeException('Should not roll back'),
+        fn () => (print 'Should stage' . PHP_EOL) > 0
     )
 );
 $transaction->setDispatcher($dispatcher);
 $transaction->commit();
-
-readfile($outFile);

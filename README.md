@@ -41,16 +41,16 @@ composer require johmanx10/transaction
 
 # Examples
 
-- [Blocked double rollback](examples/blocked-rollback.php)
-- [Copy a file](examples/copy-file.php)
-- [Custom rollback](examples/custom-rollback.php)
-- [Intercept invoke](examples/intercept-invoke.php)
-- [Intercept rollback](examples/intercept-rollback.php)
-- [Intercept stage](examples/intercept-stage.php)
-- [Logging subscriber](examples/logging-subscriber.php)
-- [Prevent invoke](examples/prevent-invoke.php)
-- [Prevent rollback](examples/prevent-rollback.php)
-- [Prevent stage](examples/prevent-stage.php)
+- [Blocked double rollback](examples/blocked-rollback.phpt)
+- [Copy a file](examples/copy-file.phpt)
+- [Custom rollback](examples/custom-rollback.phpt)
+- [Intercept invoke](examples/intercept-invoke.phpt)
+- [Intercept rollback](examples/intercept-rollback.phpt)
+- [Intercept stage](examples/intercept-stage.phpt)
+- [Logging subscriber](examples/logging-subscriber.phpt)
+- [Prevent invoke](examples/prevent-invoke.phpt)
+- [Prevent rollback](examples/prevent-rollback.phpt)
+- [Prevent stage](examples/prevent-stage.phpt)
 
 # Changes since version 1
 
