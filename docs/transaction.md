@@ -134,6 +134,8 @@ that is a side effect and not a choice by design.
 When it is determined that the transaction failed, a rollback can be performed
 on the commit result.
 
+![Transaction rollback](img/transaction-rollback.svg)
+
 Simply call `rollback` on the commit result:
 
 ```php
