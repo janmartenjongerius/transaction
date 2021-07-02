@@ -69,7 +69,6 @@ final class CommitResult
                     committed: $this->committed()
                 )
             );
-            $this->rolledBack = true;
             return;
         }
 
