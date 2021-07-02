@@ -22,9 +22,12 @@ jobs:
       - name: GrumPHP
         run: vendor/bin/grumphp run --testsuite=ci
 
+      - name: Integration test
+        run: vendor/bin/phpunit --testsuite=integration
+
       - name: Code coverage
         run: |
-          vendor/bin/phpunit --coverage-text=coverage.txt
+          vendor/bin/phpunit --testsuite=unit --coverage-text=coverage.txt
           cat coverage.txt
           grep 'Classes: ' coverage.txt \
             | head -n 1 \
