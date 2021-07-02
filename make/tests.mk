@@ -15,6 +15,3 @@ clean-coverage:
 	rm -rf $(COVERAGE)
 
 clean:: clean-coverage
-
-ci: $(SRC) $(TESTS) composer.json | vendor $(PHP)
-	$(PHP) vendor/bin/grumphp run --no-interaction
