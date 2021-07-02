@@ -47,7 +47,7 @@ class TransactionLoggerSubscriber implements EventSubscriberInterface
         $exception = $event->result->getReason();
 
         if ($exception !== null) {
-            $this->logger->error($exception);
+            $this->logger->error($exception->getMessage());
         }
 
         if ($event->result->committed()) {
