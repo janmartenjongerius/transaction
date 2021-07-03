@@ -32,6 +32,11 @@ final class OperationHandler implements OperationHandlerInterface
         return $result;
     }
 
+    /**
+     * @param OperationInterface[]|OperationInterface ...$operations
+     *
+     * @return OperationInterface[]
+     */
     private static function flatten(
         OperationInterface | iterable ...$operations
     ): iterable {

@@ -85,6 +85,12 @@ final class Touch implements OperationInterface
         );
     }
 
+    /**
+     * @param string                 $path
+     * @param DateTimeInterface|null $time
+     *
+     * @return OperationInterface[]
+     */
     public static function fromPath(
         string $path,
         ?DateTimeInterface $time = null

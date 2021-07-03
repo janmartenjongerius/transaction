@@ -14,6 +14,7 @@ final class CommitResult
 {
     use DispatcherAware;
 
+    /** @var InvocationResult[] */
     private array $results;
     private bool $rolledBack = false;
     private bool $committed;

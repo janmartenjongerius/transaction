@@ -9,6 +9,7 @@ use Johmanx10\Transaction\Operation\Result\StageResult;
 
 final class StagingResult
 {
+    /** @var StageResult[] */
     private array $results;
     private bool $staged;
 

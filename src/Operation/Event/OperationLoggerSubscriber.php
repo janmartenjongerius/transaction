@@ -15,6 +15,8 @@ class OperationLoggerSubscriber implements EventSubscriberInterface
 
     /**
      * @inheritDoc
+     *
+     * @return array<string,string|array<array{0: string, 1?: int}>>
      */
     public static function getSubscribedEvents(): array
     {

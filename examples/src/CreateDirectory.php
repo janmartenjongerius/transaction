@@ -41,6 +41,12 @@ final class CreateDirectory implements OperationInterface
         }
     }
 
+    /**
+     * @param string $path
+     * @param int    $mode
+     *
+     * @return OperationInterface[]
+     */
     public static function fromPath(string $path, int $mode = 0755): iterable
     {
         $segments = explode(DIRECTORY_SEPARATOR, $path);

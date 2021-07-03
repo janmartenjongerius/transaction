@@ -108,6 +108,13 @@ final class CopyFile implements OperationInterface
         );
     }
 
+    /**
+     * @param string $source
+     * @param string $destination
+     * @param bool   $overrideExisting
+     *
+     * @return OperationInterface[]
+     */
     public static function fromPath(
         string $source,
         string $destination,
@@ -115,7 +122,7 @@ final class CopyFile implements OperationInterface
     ): iterable {
         yield from Touch::fromPath($destination);
         yield new self(
-            new SplFileInfo(realpath($source)),
+            new SplFileInfo(realpath($source) ?: $source),
             new SplFileInfo($destination),
             $overrideExisting
         );

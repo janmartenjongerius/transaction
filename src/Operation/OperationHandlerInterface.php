@@ -8,6 +8,11 @@ use Johmanx10\Transaction\Result\CommitResult;
 
 interface OperationHandlerInterface
 {
+    /**
+     * @param OperationInterface[]|OperationInterface ...$operations
+     *
+     * @return CommitResult
+     */
     public function __invoke(
         OperationInterface | iterable ...$operations
     ): CommitResult;
