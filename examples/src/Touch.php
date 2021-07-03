@@ -39,7 +39,10 @@ final class Touch implements OperationInterface
     protected function run(): ?bool
     {
         if ($this->existed = file_exists($this->path)) {
-            $this->previousTime = filemtime($this->path);
+            $previousTime = filemtime($this->path);
+            $this->previousTime = is_int($previousTime)
+                ? $previousTime
+                : null;
         }
 
         return touch($this->path, $this->time?->getTimestamp());

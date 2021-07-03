@@ -39,9 +39,16 @@ class OperationLoggerSubscriber implements EventSubscriberInterface
                     match ($class) {
                         InvocationEvent::class => 'invoke',
                         StageEvent::class => 'stage',
-                        RollbackEvent::class => 'rollback'
+                        RollbackEvent::class => 'rollback',
+                        default => strtolower(
+                            preg_replace(
+                                '/^.+\\\\(?P<name>[^\\\\]+)$/',
+                                '$name',
+                                $class
+                            )
+                        )
                     },
-                    $event instanceof Stringable ? $event : $class
+                    $event instanceof Stringable ? (string)$event : $class
                 )
             );
         }

@@ -59,6 +59,10 @@ final class CopyFile implements OperationInterface
         $numWritten = 0;
 
         foreach ($source as $line) {
+            if (!is_string($line)) {
+                break;
+            }
+
             $numWritten += $destination->fwrite($line);
         }
 

@@ -57,7 +57,6 @@ grumphp:
       autoload_file: ~
       configuration: ./phpstan.neon
       ignore_patterns: [/^tests\/.+/]
-      level: 6
       triggered_by: [php]
 
     phpunit:

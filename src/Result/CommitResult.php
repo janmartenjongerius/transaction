@@ -110,7 +110,7 @@ final class CommitResult
                 $this->committed(),
                 true,
                 $this->getReason(),
-                $rollback
+                fn () => $rollback()
             );
             return;
         }

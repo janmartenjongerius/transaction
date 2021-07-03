@@ -1,4 +1,2 @@
 parameters:
-  ignoreErrors:
-    - path: src/Operation/Event/OperationLoggerSubscriber.php
-      message: '#Match expression does not handle remaining value: .+Interface#'
+  level: 7
