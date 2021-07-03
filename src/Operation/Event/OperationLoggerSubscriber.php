@@ -41,7 +41,7 @@ class OperationLoggerSubscriber implements EventSubscriberInterface
                         StageEvent::class => 'stage',
                         RollbackEvent::class => 'rollback',
                         default => strtolower(
-                            preg_replace(
+                            (string)preg_replace(
                                 '/^.+\\\\(?P<name>[^\\\\]+)$/',
                                 '$name',
                                 $class
