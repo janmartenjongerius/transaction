@@ -28,6 +28,7 @@
         "phpro/grumphp": "@stable",
         "phpstan/phpstan": "@stable",
         "php-parallel-lint/php-parallel-lint": "@stable",
+        "squizlabs/php_codesniffer": "@stable",
         "symfony/console": "@stable",
         "symfony/event-dispatcher": "@stable"
     },

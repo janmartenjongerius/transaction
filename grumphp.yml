@@ -35,11 +35,10 @@ grumphp:
       triggered_by: [xml]
       ignore_patterns: []
 
-# Currently missing proper PHP 8 support
-#    phpcs:
-#      standard: PSR12
-#      triggered_by: [php]
-#      whitelist_patterns: [/^src\/.+/]
+    phpcs:
+      standard: PSR12
+      triggered_by: [php]
+      whitelist_patterns: [/^src\/.+/]
 
     phplint:
       jobs: ~
