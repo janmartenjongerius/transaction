@@ -25,6 +25,7 @@
     "require-dev": {
         "ext-xdebug": "@stable",
         "phpunit/phpunit": "@stable",
+        "phpmd/phpmd": "@stable",
         "phpro/grumphp": "@stable",
         "phpstan/phpstan": "@stable",
         "php-parallel-lint/php-parallel-lint": "@stable",

@@ -46,11 +46,10 @@ grumphp:
       ignore_patterns: [/^vendor\/.+/]
       triggered_by: [php]
 
-# Currently missing proper PHP 8 support
-#    phpmd:
-#      ruleset: [cleancode, codesize, design, naming, unusedcode]
-#      triggered_by: [php]
-#      whitelist_patterns: [/^src\/.+/]
+    phpmd:
+      ruleset: [cleancode, codesize, design, naming]
+      triggered_by: [php]
+      whitelist_patterns: [/^src\/.+/]
 
     phpstan:
       autoload_file: ~
