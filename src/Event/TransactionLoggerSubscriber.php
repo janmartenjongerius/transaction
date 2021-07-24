@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Johmanx10\Transaction\Event;
@@ -8,7 +9,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class TransactionLoggerSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private LoggerInterface $logger) {}
+    public function __construct(private LoggerInterface $logger)
+    {
+    }
 
     /**
      * @inheritDoc

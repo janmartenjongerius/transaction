@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Johmanx10\Transaction\Operation;
@@ -15,7 +16,8 @@ final class Operation implements OperationInterface
         private Closure $invocation,
         private ?Closure $rollback = null,
         private ?Closure $stage = null
-    ) {}
+    ) {
+    }
 
     public function __invoke(): Invocation
     {

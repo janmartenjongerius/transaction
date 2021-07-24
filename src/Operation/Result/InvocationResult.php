@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Johmanx10\Transaction\Operation\Result;
@@ -19,7 +20,8 @@ final class InvocationResult implements Stringable
         public bool $invoked,
         public ?Throwable $exception,
         private Closure $rollback
-    ) {}
+    ) {
+    }
 
     public function rollback(): Rollback
     {

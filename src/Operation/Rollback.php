@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Johmanx10\Transaction\Operation;
@@ -13,7 +14,8 @@ final class Rollback implements Stringable
     public function __construct(
         private Stringable|string $description,
         private Closure $rollback
-    ) {}
+    ) {
+    }
 
     /**
      * Perform the rollback.

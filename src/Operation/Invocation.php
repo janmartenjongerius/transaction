@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Johmanx10\Transaction\Operation;
@@ -16,7 +17,8 @@ final class Invocation implements Stringable
         private Stringable|string $description,
         private Closure $operation,
         private Closure $rollback
-    ) {}
+    ) {
+    }
 
     public function __invoke(): InvocationResult
     {

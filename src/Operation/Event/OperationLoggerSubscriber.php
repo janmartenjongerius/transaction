@@ -1,8 +1,8 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Johmanx10\Transaction\Operation\Event;
-
 
 use Johmanx10\Transaction\Event\DefaultPreventableInterface;
 use Psr\Log\LoggerInterface;
@@ -11,7 +11,9 @@ use Symfony\Component\EventDispatcher\EventSubscriberInterface;
 
 class OperationLoggerSubscriber implements EventSubscriberInterface
 {
-    public function __construct(private LoggerInterface $logger) {}
+    public function __construct(private LoggerInterface $logger)
+    {
+    }
 
     /**
      * @inheritDoc

@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace Johmanx10\Transaction;
@@ -14,7 +15,8 @@ class TransactionFactory implements TransactionFactoryInterface
     public function __construct(
         private ?EventDispatcherInterface $dispatcher = null,
         private bool $strategy = self::STRATEGY_EXECUTE
-    ) {}
+    ) {
+    }
 
     /**
      * Create a new transaction for the given operations.
