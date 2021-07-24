@@ -16,6 +16,8 @@ grumphp:
         - phplint
         - phpstan
         - phpparser
+        - phpcs
+        - phpmd
 
   tasks:
     composer:
