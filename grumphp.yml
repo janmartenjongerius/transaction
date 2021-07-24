@@ -36,7 +36,6 @@ grumphp:
       ignore_patterns: []
 
     phpcs:
-      standard: PSR12
       triggered_by: [php]
       whitelist_patterns: [/^src\/.+/]
 
@@ -47,7 +46,6 @@ grumphp:
       triggered_by: [php]
 
     phpmd:
-      ruleset: [cleancode, codesize, design, naming]
       triggered_by: [php]
       whitelist_patterns: [/^src\/.+/]
 
