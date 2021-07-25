@@ -13,6 +13,8 @@ use Acme\Filesystem\Operation\CopyFile;
 use Johmanx10\Transaction\DryRun;
 use Johmanx10\Transaction\TransactionFactory;
 
+require_once __DIR__ . '/../vendor/autoload.php';
+
 $factory = new TransactionFactory(
     strategy: TransactionFactory::STRATEGY_DRY_RUN
 );

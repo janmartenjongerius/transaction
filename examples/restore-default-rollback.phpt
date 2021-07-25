@@ -12,6 +12,8 @@ declare(strict_types=1);
 use Johmanx10\Transaction\TransactionFactory;
 use Johmanx10\Transaction\Operation\OperationHandler;
 
+require_once __DIR__ . '/../vendor/autoload.php';
+
 $handler = new OperationHandler(new TransactionFactory());
 $property = new ReflectionProperty(OperationHandler::class, 'rollback');
 

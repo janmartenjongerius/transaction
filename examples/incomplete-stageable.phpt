@@ -15,6 +15,8 @@ declare(strict_types=1);
 use Johmanx10\Transaction\Operation\Stageable;
 use Johmanx10\Transaction\Operation\Result\StageResult;
 
+require_once __DIR__ . '/../vendor/autoload.php';
+
 $operation = new class () {
     use Stageable;
 

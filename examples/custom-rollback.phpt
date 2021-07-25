@@ -14,6 +14,8 @@ use Acme\Filesystem\Operation\CopyFile;
 use Johmanx10\Transaction\Operation\Operation;
 use Johmanx10\Transaction\Operation\OperationHandlerInterface;
 
+require_once __DIR__ . '/../vendor/autoload.php';
+
 /** @var OperationHandlerInterface $handler */
 $handler = require __DIR__ . '/app/handler.php';
 $directory = sys_get_temp_dir() . '/' . __FILE__ . '.out';

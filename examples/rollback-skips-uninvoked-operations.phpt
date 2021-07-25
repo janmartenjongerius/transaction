@@ -14,6 +14,8 @@ use Johmanx10\Transaction\Operation\Operation;
 use Johmanx10\Transaction\Operation\Result\StageResult;
 use Johmanx10\Transaction\Transaction;
 
+require_once __DIR__ . '/../vendor/autoload.php';
+
 $transaction = new Transaction(
     new Operation(
         description: 'Successful operation',
