@@ -2,6 +2,7 @@
 ![PHP from Packagist](https://img.shields.io/packagist/php-v/johmanx10/transaction.svg)
 ![Packagist](https://img.shields.io/packagist/dt/johmanx10/transaction.png)
 ![Build status](https://github.com/johmanx10/transaction/actions/workflows/php.yml/badge.svg)
+[![codecov](https://codecov.io/gh/johmanx10/transaction/branch/master/graph/badge.svg?token=G7A1FM4W02)](https://codecov.io/gh/johmanx10/transaction)
 
 # Introduction
 
