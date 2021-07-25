@@ -67,12 +67,14 @@ grumphp:
     phpunit:
       config_file: ./phpunit.xml
       testsuite: unit
+      always_execute: true
       metadata:
         label: PHP unit tests
 
     phpunit_integration:
       config_file: ./phpunit.xml
       testsuite: integration
+      always_execute: true
       metadata:
         task: phpunit
         priority: 100
