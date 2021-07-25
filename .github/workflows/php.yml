@@ -22,3 +22,5 @@ jobs:
       - name: GrumPHP
         run: vendor/bin/grumphp run
 
+      - name: Codecov
+        uses: codecov/codecov-action@v2
