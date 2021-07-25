@@ -13,8 +13,20 @@ trait EventSubscriberTrait
         array $map
     ): void {
         $reflection = new ReflectionClass($class);
+        $subscriptions = [];
 
-        foreach ($map as $eventClass => $method) {
+        foreach ($map as $eventClass => $methods) {
+            if (is_string($methods)) {
+                $subscriptions[] = [$eventClass, $methods];
+                continue;
+            }
+
+            foreach ($methods as [$method]) {
+                $subscriptions[] = [$eventClass, $method];
+            }
+        }
+
+        foreach ($subscriptions as [$eventClass, $method]) {
             self::assertTrue(
                 $reflection->hasMethod($method),
                 sprintf(
@@ -103,6 +115,10 @@ trait EventSubscriberTrait
             $subscriberCallback($logger)
         );
 
-        self::assertEquals($expected, $logger->records, $message);
+        self::assertEquals(
+            json_encode($expected, JSON_PRETTY_PRINT),
+            json_encode($logger->records, JSON_PRETTY_PRINT),
+            $message
+        );
     }
 }

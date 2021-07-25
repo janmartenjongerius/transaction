@@ -17,6 +17,7 @@ use Johmanx10\Transaction\Result\StagingResult;
 use PHPUnit\Framework\TestCase;
 use Johmanx10\Transaction\Event\TransactionLoggerSubscriber;
 use Psr\Log\LoggerInterface;
+use RuntimeException;
 
 /**
  * @coversDefaultClass \Johmanx10\Transaction\Event\TransactionLoggerSubscriber
@@ -61,8 +62,7 @@ class TransactionLoggerSubscriberTest extends TestCase
     ): void {
         self::assertSubscriberCausesRecords(
             expected: $expected,
-            subscriberCallback: fn(LoggerInterface $logger
-        ) => new TransactionLoggerSubscriber($logger),
+            subscriberCallback: fn(LoggerInterface $logger) => new TransactionLoggerSubscriber($logger),
             eventCallback: $eventCallback,
             message: $message
         );
@@ -82,8 +82,7 @@ class TransactionLoggerSubscriberTest extends TestCase
     ): void {
         self::assertEventCausesRecords(
             $expected,
-            fn(TransactionLoggerSubscriber $subscriber
-            ) => $subscriber->onRollbackBlocked($event)
+            fn(TransactionLoggerSubscriber $subscriber) => $subscriber->onRollbackBlocked($event)
         );
     }
 
@@ -206,9 +205,7 @@ class TransactionLoggerSubscriberTest extends TestCase
                         new StageResult(
                             staged: false,
                             requiresInvoke: true,
-                            operation: self::createMock(
-                            OperationInterface::class
-                        )
+                            operation: self::createMock(OperationInterface::class)
                         )
                     )
                 ),
@@ -270,7 +267,7 @@ class TransactionLoggerSubscriberTest extends TestCase
                             description: __METHOD__,
                             success: true,
                             invoked: true,
-                            exception: new \RuntimeException($exceptionMessage),
+                            exception: new RuntimeException($exceptionMessage),
                             rollback: fn () => null
                         )
                     )
@@ -314,7 +311,7 @@ class TransactionLoggerSubscriberTest extends TestCase
                             description: __METHOD__,
                             success: false,
                             invoked: true,
-                            exception: new \RuntimeException($exceptionMessage),
+                            exception: new RuntimeException($exceptionMessage),
                             rollback: fn () => null
                         )
                     )

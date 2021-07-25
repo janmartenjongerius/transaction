@@ -34,18 +34,28 @@ class OperationLoggerSubscriber implements EventSubscriberInterface
     public function onAfterPrevent(DefaultPreventableInterface $event): void
     {
         if ($event->isDefaultPrevented()) {
-            $class = get_class($event);
+            $class = (string)preg_replace(
+                '/^([^@]+).*$/',
+                '$1',
+                get_class($event)
+            );
             $this->logger->debug(
                 sprintf(
                     "[%s] Prevented: %s",
+                    // @codeCoverageIgnoreStart
+                    // For some reason, the first line of the match will not be
+                    // covered. Since the body of the match is covered, this is
+                    // ignored. Possible bug in Xdebug or a mismatch between
+                    // the definition of what is and what is not a statement.
                     match ($class) {
+                        // @codeCoverageIgnoreEnd
                         InvocationEvent::class => 'invoke',
                         StageEvent::class => 'stage',
                         RollbackEvent::class => 'rollback',
                         default => strtolower(
                             (string)preg_replace(
                                 '/^.+\\\\(?P<name>[^\\\\]+)$/',
-                                '$name',
+                                '$1',
                                 $class
                             )
                         )
