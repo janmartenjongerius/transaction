@@ -25,7 +25,9 @@ Logging subscribers at maximum verbosity.
 [info] [invoke] Touch: /%s/tests/logging-subscriber.phpt.out/index.php @%s, %d %s %d %d:%d:%d %s
 [info] [invoke] Success: Touch: /%s/tests/logging-subscriber.phpt.out/index.php @%s, %d %s %d %d:%d:%d %s
 [info] [invoke] Copy file /%s/vendor/autoload.php to /%s/tests/logging-subscriber.phpt.out
+[error] Cannot override existing file: "/%s/logging-subscriber.phpt.out/index.php"
 [error] [invoke] Failed: Copy file /%s/vendor/autoload.php to /%s/tests/logging-subscriber.phpt.out
+[error] Cannot override existing file: "/%s/logging-subscriber.phpt.out/index.php"
 [error] Transaction not committed
 [warning] [rollback] Rolling back: Copy file /%s/vendor/autoload.php to /%s/tests/logging-subscriber.phpt.out
 [warning] [rollback] Rolling back: Touch: /%s/tests/logging-subscriber.phpt.out/index.php @%s, %d %s %d %d:%d:%d %s

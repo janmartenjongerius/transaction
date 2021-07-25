@@ -6,6 +6,7 @@ namespace Acme\Filesystem\Operation;
 use Johmanx10\Transaction\Operation\Operable;
 use Johmanx10\Transaction\Operation\OperationInterface;
 use Johmanx10\Transaction\Operation\Result\StageResult;
+use RuntimeException;
 use SplFileInfo;
 use SplFileObject;
 use SplTempFileObject;
@@ -74,7 +75,12 @@ final class CopyFile implements OperationInterface
         if ($this->overrideExisting === false
             && $this->destination->getRealPath() !== false
         ) {
-            return false;
+            throw new RuntimeException(
+                sprintf(
+                    'Cannot override existing file: "%s"',
+                    $this->destination->getRealPath()
+                )
+            );
         }
 
         if ($this->destination->getSize() > 0) {

@@ -1,7 +1,9 @@
 --TEST--
 Custom rollback callable on operation handler.
 --EXPECTF--
+[error] Cannot override existing file: "/%s/custom-rollback.phpt.out/composer.json"
 [error] [invoke] Failed: Copy file /%s/composer.json to /%s/custom-rollback.phpt.out
+[error] Cannot override existing file: "/%s/custom-rollback.phpt.out/composer.json"
 [error] Transaction not committed
 [warning] [rollback] Rolling back: Transaction
 --FILE--
