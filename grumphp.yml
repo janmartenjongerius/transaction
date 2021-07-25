@@ -10,16 +10,19 @@ grumphp:
     composer:
       strict: true
       metadata:
+        label: Composer
         priority: 200
 
     phpversion:
       project: '8.0'
       metadata:
+        label: PHP version
         priority: 200
 
     jsonlint:
       detect_key_conflicts: true
       metadata:
+        label: JSON lint
         priority: 200
 
     xmllint:
@@ -30,41 +33,55 @@ grumphp:
       triggered_by: [xml]
       ignore_patterns: []
       metadata:
+        label: XML lint
         priority: 200
 
     phpcs:
       triggered_by: [php]
       whitelist_patterns: [/^src\/.+/]
+      metadata:
+        label: PHP Code Sniffer
 
     phplint:
       jobs: ~
       short_open_tag: false
       ignore_patterns: [/^vendor\/.+/]
       triggered_by: [php]
+      metadata:
+        label: PHP lint
 
     phpmd:
       triggered_by: [php]
       whitelist_patterns: [/^src\/.+/]
+      metadata:
+        label: PHP Mess detector
 
     phpstan:
       autoload_file: ~
       configuration: ./phpstan.neon
       ignore_patterns: [/^tests\/.+/]
       triggered_by: [php]
+      metadata:
+        label: PHP Static analysis
 
     phpunit:
       config_file: ./phpunit.xml
       testsuite: unit
+      metadata:
+        label: PHP unit tests
 
     phpunit_integration:
       testsuite: integration
       metadata:
         task: phpunit
         priority: 100
+        label: Examples
 
     clover_coverage:
       clover_file: coverage.xml
       level: 100
+      metadata:
+        label: Code coverage
 
     phpparser:
       ignore_patterns: [/^vendor\/.+/, /^examples\/app\/.+/]
@@ -75,3 +92,4 @@ grumphp:
         no_exit_statements: ~
       metadata:
         priority: 200
+        label: PHP parser
