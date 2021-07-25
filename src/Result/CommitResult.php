@@ -11,7 +11,7 @@ use Johmanx10\Transaction\Operation\Event\RollbackEvent;
 use Johmanx10\Transaction\Operation\Result\InvocationResult;
 use Throwable;
 
-final class CommitResult
+final class CommitResult implements CommitResultInterface
 {
     use DispatcherAware;
 

@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace Johmanx10\Transaction\Operation;
 
 use Closure;
-use Johmanx10\Transaction\Result\CommitResult;
+use Johmanx10\Transaction\Result\CommitResultInterface;
 use Johmanx10\Transaction\TransactionFactoryInterface;
 
 final class OperationHandler implements OperationHandlerInterface
@@ -18,7 +18,7 @@ final class OperationHandler implements OperationHandlerInterface
 
     public function __invoke(
         OperationInterface | iterable ...$operations
-    ): CommitResult {
+    ): CommitResultInterface {
         $transaction = $this->factory->__invoke(
             ...self::flatten(...$operations)
         );

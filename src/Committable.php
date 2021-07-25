@@ -14,6 +14,7 @@ use Johmanx10\Transaction\Operation\Invocation;
 use Johmanx10\Transaction\Operation\OperationInterface;
 use Johmanx10\Transaction\Operation\Result\InvocationResult;
 use Johmanx10\Transaction\Result\CommitResult;
+use Johmanx10\Transaction\Result\CommitResultInterface;
 use Johmanx10\Transaction\Result\StagingResult;
 
 trait Committable
@@ -53,7 +54,7 @@ trait Committable
         return $result;
     }
 
-    public function commit(): CommitResult
+    public function commit(): CommitResultInterface
     {
         $results = [];
         $staging = $this->stage(...$this->operations);

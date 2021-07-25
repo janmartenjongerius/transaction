@@ -146,7 +146,7 @@ The rollback mechanism will not catch this, which means it bubbles up to
 userland:
 
 ```php
-/** @var \Johmanx10\Transaction\Result\CommitResult $commitResult */
+/** @var \Johmanx10\Transaction\Result\CommitResultInterface $commitResult */
 
 try {
     $commitResult->rollback();
