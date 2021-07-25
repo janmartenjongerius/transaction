@@ -71,11 +71,20 @@ grumphp:
         label: PHP unit tests
 
     phpunit_integration:
+      config_file: ./phpunit.xml
       testsuite: integration
       metadata:
         task: phpunit
         priority: 100
         label: Examples
+
+    clover_coverage_integration:
+      clover_file: coverage.xml
+      level: 100
+      metadata:
+        label: Integration coverage
+        priority: 50
+        task: clover_coverage
 
     clover_coverage:
       clover_file: coverage.xml
