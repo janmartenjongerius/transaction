@@ -2,6 +2,7 @@
         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
         xsi:noNamespaceSchemaLocation="vendor/phpunit/phpunit/phpunit.xsd"
         cacheResult="false"
+        defaultTestSuite="unit"
         bootstrap="vendor/autoload.php">
     <testsuites>
         <testsuite name="unit">
@@ -15,5 +16,8 @@
         <include>
             <directory suffix=".php">src</directory>
         </include>
+        <report>
+            <clover outputFile="coverage.xml"/>
+        </report>
     </coverage>
 </phpunit>

@@ -4,30 +4,23 @@ grumphp:
     succeeded: ~
 
   parallel:
-    enabled: false
-
-  testsuites:
-    ci:
-      tasks:
-        - composer
-        - phpversion
-        - jsonlint
-        - xmllint
-        - phplint
-        - phpstan
-        - phpparser
-        - phpcs
-        - phpmd
+    enabled: true
 
   tasks:
     composer:
       strict: true
+      metadata:
+        priority: 200
 
     phpversion:
       project: '8.0'
+      metadata:
+        priority: 200
 
     jsonlint:
       detect_key_conflicts: true
+      metadata:
+        priority: 200
 
     xmllint:
       load_from_net: false
@@ -36,6 +29,8 @@ grumphp:
       scheme_validation: true
       triggered_by: [xml]
       ignore_patterns: []
+      metadata:
+        priority: 200
 
     phpcs:
       triggered_by: [php]
@@ -59,6 +54,17 @@ grumphp:
 
     phpunit:
       config_file: ./phpunit.xml
+      testsuite: unit
+
+    phpunit_integration:
+      testsuite: integration
+      metadata:
+        task: phpunit
+        priority: 100
+
+    clover_coverage:
+      clover_file: coverage.xml
+      level: 100
 
     phpparser:
       ignore_patterns: [/^vendor\/.+/, /^examples\/app\/.+/]
@@ -67,3 +73,5 @@ grumphp:
         declare_strict_types: ~
         never_use_else: ~
         no_exit_statements: ~
+      metadata:
+        priority: 200

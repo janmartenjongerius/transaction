@@ -3,3 +3,4 @@ composer.lock
 
 # Code coverage output
 /coverage
+/coverage.xml
