@@ -41,6 +41,7 @@ grumphp:
       whitelist_patterns: [/^src\/.+/]
       metadata:
         label: PHP Code Sniffer
+        priority: 200
 
     phplint:
       jobs: ~
@@ -49,12 +50,14 @@ grumphp:
       triggered_by: [php]
       metadata:
         label: PHP lint
+        priority: 200
 
     phpmd:
       triggered_by: [php]
       whitelist_patterns: [/^src\/.+/]
       metadata:
         label: PHP Mess detector
+        priority: 200
 
     phpstan:
       autoload_file: ~
@@ -63,6 +66,7 @@ grumphp:
       triggered_by: [php]
       metadata:
         label: PHP Static analysis
+        priority: 200
 
     phpunit:
       config_file: ./phpunit.xml
