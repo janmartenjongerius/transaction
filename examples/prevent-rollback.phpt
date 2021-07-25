@@ -3,6 +3,7 @@ Prevent rollback.
 --EXPECT--
 Should stage
 Should fail run
+0 rollbacks performed
 --FILE--
 <?php
 declare(strict_types=1);
@@ -12,12 +13,20 @@ require_once __DIR__ . '/../vendor/autoload.php';
 use Johmanx10\Transaction\Operation\Event\RollbackEvent;
 use Johmanx10\Transaction\Operation\Operation;
 use Johmanx10\Transaction\Transaction;
+use Johmanx10\Transaction\Event\RollbackResultEvent;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 
 $dispatcher = new EventDispatcher();
 $dispatcher->addListener(
     RollbackEvent::class,
     fn (RollbackEvent $event) => $event->preventDefault()
+);
+$dispatcher->addListener(
+    RollbackResultEvent::class,
+    fn (RollbackResultEvent $event) => print sprintf(
+        '%d rollbacks performed',
+        count($event->rollbacks)
+    )
 );
 
 $transaction = new Transaction(
@@ -29,4 +38,5 @@ $transaction = new Transaction(
     )
 );
 $transaction->setDispatcher($dispatcher);
-$transaction->commit();
+$result = $transaction->commit();
+$result->rollback();
